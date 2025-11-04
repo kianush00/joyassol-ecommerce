@@ -12,7 +12,6 @@ import Link from "next/link";
 
 const Header = async () => {
   const user = await currentUser();
-  console.log("user", user);
   return (
     <header className="border-b border-b-gray-200 py-5">
       <Container className="flex items-center justify-between gap-7 text-lightColor">

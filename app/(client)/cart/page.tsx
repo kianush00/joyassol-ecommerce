@@ -23,6 +23,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import paypalLogo from "@/images/paypalLogo.png";
+import OrderSummary from "@/components/OrderSummary";
+import {
+  createCheckoutSession,
+  Metadata,
+} from "@/actions/createCheckoutSession";
 
 const CartPage = () => {
   const {
@@ -34,8 +39,9 @@ const CartPage = () => {
     getGroupedItems,
   } = useCartStore();
   const [isClient, setIsClient] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { isSignedIn } = useAuth();
-  const user = useUser();
+  const { user } = useUser();
   const cartProducts = getGroupedItems();
 
   useEffect(() => {
@@ -57,8 +63,24 @@ const CartPage = () => {
     toast.success("Product deleted successfully!");
   };
 
-  const handleCheckout = () => {
-    toast.error("Checkout feature is not available yet!");
+  const handleCheckout = async () => {
+    setLoading(true);
+    try {
+      const metadata: Metadata = {
+        orderNumber: crypto.randomUUID(),
+        customerName: user?.fullName ?? "Unknown",
+        customerEmail: user?.emailAddresses[0]?.emailAddress ?? "Unknown",
+        clerkUserId: user!.id,
+      };
+      const checkoutUrl = await createCheckoutSession(cartProducts, metadata);
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -165,94 +187,24 @@ const CartPage = () => {
                     </Button>
                   </div>
                 </div>
-                {/* summary */}
+                {/* Order summary for desktop view */}
                 <div className="lg:col-span-1">
                   <div className="hidden md:inline-block w-full bg-white p-6 rounded-lg border">
-                    <h2 className="text-xl font-semibold mb-4">
-                      Order Summary
-                    </h2>
-                    <div className="space-y-4">
-                      <div className="flex justify-between">
-                        <span>Subtotal</span>
-                        <PriceFormatter amount={getSubtotalPrice()} />
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Discount</span>
-                        <PriceFormatter
-                          amount={getSubtotalPrice() - getTotalPrice()}
-                        />
-                      </div>
-                      <Separator />
-                      <div className="flex justify-between">
-                        <span>Total</span>
-                        <PriceFormatter
-                          amount={getTotalPrice()}
-                          className="text-lg font-bold text-black"
-                        />
-                      </div>
-                      <Button
-                        onClick={handleCheckout}
-                        className="w-full rounded-full font-semibold tracking-wide"
-                        size="lg"
-                      >
-                        Proceed to Checkout
-                      </Button>
-                      <Link
-                        href="/"
-                        className="flex items-center justify-center py-2 border border-darkColor/50 rounded-full hover:border-darkColor hover:bg-darkColor/5 hoverEffect"
-                      >
-                        <Image
-                          src={paypalLogo}
-                          alt="paypalLogo"
-                          className="w-20"
-                        />
-                      </Link>
-                    </div>
+                    <OrderSummary
+                      getSubtotalPrice={getSubtotalPrice}
+                      getTotalPrice={getTotalPrice}
+                      handleCheckout={handleCheckout}
+                    />
                   </div>
                 </div>
                 {/* Order summary for mobile view */}
                 <div className="md:hidden fixed bottom-0 left-0 w-full bg-white pt-2">
                   <div className="p-4 rounded-lg border mx-4">
-                    <h2 className="text-xl font-semibold mb-4">
-                      Order Summary
-                    </h2>
-                    <div className="space-y-4">
-                      <div className="flex justify-between">
-                        <span>Subtotal</span>
-                        <PriceFormatter amount={getSubtotalPrice()} />
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Discount</span>
-                        <PriceFormatter
-                          amount={getSubtotalPrice() - getTotalPrice()}
-                        />
-                      </div>
-                      <Separator />
-                      <div className="flex justify-between">
-                        <span>Total</span>
-                        <PriceFormatter
-                          amount={getTotalPrice()}
-                          className="text-lg font-bold text-black"
-                        />
-                      </div>
-                      <Button
-                        onClick={handleCheckout}
-                        className="w-full rounded-full font-semibold tracking-wide"
-                        size="lg"
-                      >
-                        Proceed to Checkout
-                      </Button>
-                      <Link
-                        href="/"
-                        className="flex items-center justify-center py-2 border border-darkColor/50 rounded-full hover:border-darkColor hover:bg-darkColor/5 hoverEffect"
-                      >
-                        <Image
-                          src={paypalLogo}
-                          alt="paypalLogo"
-                          className="w-20"
-                        />
-                      </Link>
-                    </div>
+                    <OrderSummary
+                      getSubtotalPrice={getSubtotalPrice}
+                      getTotalPrice={getTotalPrice}
+                      handleCheckout={handleCheckout}
+                    />
                   </div>
                 </div>
               </div>

@@ -1,3 +1,4 @@
+"use client";
 import { Product } from "@/sanity.types";
 import React from "react";
 import { toast } from "react-hot-toast";

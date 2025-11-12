@@ -1,5 +1,4 @@
 "use client";
-
 import Container from "@/components/Container";
 import EmptyCart from "@/components/EmptyCart";
 import Loading from "@/components/Loading";
@@ -7,7 +6,6 @@ import NoAccessToCart from "@/components/NoAccessToCart";
 import PriceFormatter from "@/components/PriceFormatter";
 import QuantityButtons from "@/components/QuantityButtons";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
@@ -22,7 +20,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import paypalLogo from "@/images/paypalLogo.png";
 import OrderSummary from "@/components/OrderSummary";
 import {
   createCheckoutSession,

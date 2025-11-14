@@ -23,6 +23,7 @@ const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
+      // Add product or increase quantity
       addItem: (product) =>
         set((state) => {
           const existingItem = state.items.find(
@@ -40,6 +41,7 @@ const useCartStore = create<CartState>()(
             return { items: [...state.items, { product, quantity: 1 }] };
           }
         }),
+      // Decrease quantity or delete if it reaches 0
       removeItem: (productId) =>
         set((state) => ({
           items: state.items.reduce((acc, item) => {
@@ -53,29 +55,40 @@ const useCartStore = create<CartState>()(
             return acc;
           }, [] as CartItem[]),
         })),
+      // Completely remove the item
       deleteCartProduct: (productId) =>
         set((state) => ({
           items: state.items.filter(({ product }) => product._id !== productId),
         })),
+      // Clean the entire cart
       resetCart: () => set({ items: [] }),
+      // Calculate total with final price
       getTotalPrice: () => {
         return get().items.reduce(
           (total, item) => total + (item.product.price ?? 0) * item.quantity,
           0
         );
       },
+      // Calculate subtotal (original price before applying discounts)
       getSubtotalPrice: () => {
-        return get().items.reduce((total, item) => {
-          const price = item.product.price ?? 0;
-          const discount = ((item.product.discount ?? 0) * price) / 100;
-          const discountedPrice = price + discount;
-          return total + discountedPrice * item.quantity;
+        return get().items.reduce((total, { product, quantity }) => {
+          const netPrice = product.price ?? 0;
+          const discountPercent = product.discount ?? 0;
+
+          const originalPrice =
+            discountPercent > 0
+              ? netPrice / (1 - discountPercent / 100)
+              : netPrice;
+
+          return total + originalPrice * quantity;
         }, 0);
       },
+      // Returns how many units of a product there are
       getItemCount: (productId) => {
         const item = get().items.find((item) => item.product._id === productId);
         return item ? item.quantity : 0;
       },
+      // Returns the current array of items
       getGroupedItems: () => get().items,
     }),
     { name: "cart-store" }

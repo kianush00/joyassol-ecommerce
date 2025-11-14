@@ -3,18 +3,15 @@ import Container from "@/components/Container";
 import EmptyCart from "@/components/EmptyCart";
 import Loading from "@/components/Loading";
 import NoAccessToCart from "@/components/NoAccessToCart";
-import { Button } from "@/components/ui/button";
 import useCartStore from "@/store";
 import { useAuth, useUser } from "@clerk/nextjs";
-import { ShoppingBag } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import OrderSummary from "@/components/OrderSummary";
 import {
   createCheckoutSession,
   Metadata,
 } from "@/actions/createCheckoutSession";
-import CartProductsList from "@/components/CartProductsList";
+import CartContent from "@/components/CartContent";
 
 const CartPage = () => {
   const deleteCartProduct = useCartStore((s) => s.deleteCartProduct);
@@ -74,58 +71,16 @@ const CartPage = () => {
       {isSignedIn ? (
         <Container>
           {cartProducts?.length ? (
-            <>
-              {/* Cart header */}
-              <div className="flex items-center gap-2 py-5">
-                <ShoppingBag />
-                <h1 className="text-2xl font-semibold">Shopping Cart</h1>
-              </div>
-
-              {/* Cart grid */}
-              <div className="grid lg:grid-cols-3 md:gap-8">
-                {/* Products list */}
-                <div className="lg:col-span-2 rounded-lg">
-                  <div className="border bg-white rounded-md">
-                    <CartProductsList
-                      cartProducts={cartProducts}
-                      getItemCount={getItemCount}
-                      handleDeleteProduct={handleDeleteProduct}
-                    />
-                    <Button
-                      onClick={handleResetCart}
-                      className="m-5 font-semibold"
-                      variant="destructive"
-                    >
-                      Reset Cart
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Order summary for desktop view */}
-                <div className="lg:col-span-1">
-                  <div className="hidden md:inline-block w-full bg-white p-6 rounded-lg border">
-                    <OrderSummary
-                      isLoading={loading}
-                      getSubtotalPrice={getSubtotalPrice}
-                      getTotalPrice={getTotalPrice}
-                      handleCheckout={handleCheckout}
-                    />
-                  </div>
-                </div>
-
-                {/* Order summary for mobile view */}
-                <div className="md:hidden fixed bottom-0 left-0 w-full bg-white pt-2">
-                  <div className="p-4 rounded-lg border mx-4">
-                    <OrderSummary
-                      isLoading={loading}
-                      getSubtotalPrice={getSubtotalPrice}
-                      getTotalPrice={getTotalPrice}
-                      handleCheckout={handleCheckout}
-                    />
-                  </div>
-                </div>
-              </div>
-            </>
+            <CartContent
+              cartProducts={cartProducts}
+              loading={loading}
+              getItemCount={getItemCount}
+              getSubtotalPrice={getSubtotalPrice}
+              getTotalPrice={getTotalPrice}
+              handleDeleteProduct={handleDeleteProduct}
+              handleResetCart={handleResetCart}
+              handleCheckout={handleCheckout}
+            />
           ) : (
             <EmptyCart />
           )}

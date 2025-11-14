@@ -3,7 +3,6 @@ import { CATEGORIES_QUERYResult } from "@/sanity.types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import Home from "../app/(client)/page";
 
 interface Props {
   categories: CATEGORIES_QUERYResult;

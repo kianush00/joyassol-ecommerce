@@ -5,15 +5,20 @@ import Container from "./Container";
 import MobileMenu from "./MobileMenu";
 import SearchBar from "./SearchBar";
 import CartIcon from "./CartIcon";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { ClerkLoaded, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
-import { ListOrdered } from "lucide-react";
-import Link from "next/link";
-import { getAllCategories } from "@/sanity/helpers/queries";
+import { getAllCategories, getMyOrders } from "@/sanity/helpers/queries";
+import { MY_ORDERS_QUERYResult } from "@/sanity.types";
+import OrdersIcon from "./OrdersIcon";
 
 const Header = async () => {
   const user = await currentUser();
+  const { userId } = await auth();
   const categories = await getAllCategories();
+  let orders: MY_ORDERS_QUERYResult | null = null;
+  if (userId) {
+    orders = await getMyOrders(userId);
+  }
 
   return (
     <header className="border-b border-b-gray-200 py-5">
@@ -28,12 +33,7 @@ const Header = async () => {
           <CartIcon />
           <ClerkLoaded>
             <SignedIn>
-              <Link href={"/orders"} className="group relative">
-                <ListOrdered className="w-5 h-5 group-hover:text-darkColor hoverEffect" />
-                <span className="absolute -top-1 -right-1 bg-darkColor text-white h-3.5 w-3.5 rounded-full text-xs font-semibold flex items-center justify-center">
-                  0
-                </span>
-              </Link>
+              <OrdersIcon orders={orders} />
               <UserButton />
             </SignedIn>
             {!user && (

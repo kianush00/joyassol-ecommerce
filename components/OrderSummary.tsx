@@ -11,12 +11,14 @@ interface OrderSummaryProps {
   getSubtotalPrice: () => number;
   getTotalPrice: () => number;
   handleCheckout: () => void;
+  isLoading: boolean;
 }
 
 const OrderSummary = ({
   getSubtotalPrice,
   getTotalPrice,
   handleCheckout,
+  isLoading,
 }: OrderSummaryProps) => {
   return (
     <>
@@ -39,6 +41,7 @@ const OrderSummary = ({
           />
         </div>
         <Button
+          disabled={isLoading}
           onClick={handleCheckout}
           className="w-full rounded-full font-semibold tracking-wide"
           size="lg"

@@ -49,7 +49,9 @@ const CartPage = () => {
   }
 
   const handleResetCart = () => {
-    const confirmed = window.confirm("Are you sure you want to reset cart?");
+    const confirmed = globalThis.confirm(
+      "Are you sure you want to reset cart?"
+    );
     if (confirmed) {
       resetCart();
       toast.success("Your cart reset successfully!");
@@ -71,7 +73,7 @@ const CartPage = () => {
       };
       const checkoutUrl = await createCheckoutSession(cartProducts, metadata);
       if (checkoutUrl) {
-        window.location.href = checkoutUrl;
+        globalThis.location.href = checkoutUrl;
       }
     } catch (error) {
       console.error("Error creating checkout session:", error);
@@ -188,6 +190,7 @@ const CartPage = () => {
                 <div className="lg:col-span-1">
                   <div className="hidden md:inline-block w-full bg-white p-6 rounded-lg border">
                     <OrderSummary
+                      isLoading={loading}
                       getSubtotalPrice={getSubtotalPrice}
                       getTotalPrice={getTotalPrice}
                       handleCheckout={handleCheckout}
@@ -198,6 +201,7 @@ const CartPage = () => {
                 <div className="md:hidden fixed bottom-0 left-0 w-full bg-white pt-2">
                   <div className="p-4 rounded-lg border mx-4">
                     <OrderSummary
+                      isLoading={loading}
                       getSubtotalPrice={getSubtotalPrice}
                       getTotalPrice={getTotalPrice}
                       handleCheckout={handleCheckout}

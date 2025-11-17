@@ -1,12 +1,11 @@
 import { motion } from "motion/react";
 import Logo from "./Logo";
 import { X } from "lucide-react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 import SocialMedia from "./SocialMedia";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { logoName } from "../app/constants/index";
 import { CATEGORIES_QUERYResult } from "@/sanity.types";
+import MenuItem from "./MenuItem";
 
 interface Props {
   isOpen: boolean;
@@ -15,7 +14,6 @@ interface Props {
 }
 
 const Sidebar = ({ isOpen, onClose, categories }: Props) => {
-  const pathname = usePathname();
   const sidebarRef = useOutsideClick<HTMLDivElement>(onClose);
 
   return (
@@ -31,6 +29,7 @@ const Sidebar = ({ isOpen, onClose, categories }: Props) => {
         ref={sidebarRef}
         className="min-w-72 max-w-96 bg-darkColor text-white/70 h-full p-10 border-r border-r-white flex flex-col gap-6"
       >
+        {/* Header Content and X Button */}
         <div className="flex items-center justify-between">
           <button onClick={onClose}>
             <Logo className="text-white">{logoName}</Logo>
@@ -39,27 +38,25 @@ const Sidebar = ({ isOpen, onClose, categories }: Props) => {
             <X />
           </button>
         </div>
+
+        {/* Menu Items */}
         <div className="flex flex-col gap-3.5 text-base font-semibold tracking-wide">
-          <Link
-            onClick={onClose}
+          <MenuItem
             href={"/"}
-            className={`hover:text-white hoverEffect ${
-              pathname === `/` && "text-white"
-            }`}
-          >
-            Home
-          </Link>
+            title={"Home"}
+            onClick={onClose}
+            className="w-40"
+            backgroundIsLightColor={false}
+          />
           {categories?.map((item) => (
-            <Link
-              onClick={onClose}
+            <MenuItem
               key={item?.title}
               href={`/category/${item?.slug?.current}`}
-              className={`hover:text-white hoverEffect w-24 ${
-                pathname === `/category/${item?.slug?.current}` && "text-white"
-              }`}
-            >
-              {item?.title}
-            </Link>
+              title={item?.title || "Category"}
+              onClick={onClose}
+              className="w-40"
+              backgroundIsLightColor={false}
+            />
           ))}
         </div>
         <SocialMedia />

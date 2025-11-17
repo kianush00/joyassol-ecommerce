@@ -1,22 +1,23 @@
-import React from "react";
 import { motion } from "motion/react";
 import Logo from "./Logo";
 import { X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { headerData } from "@/app/constants";
 import SocialMedia from "./SocialMedia";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { logoName } from "../app/constants/index";
+import { CATEGORIES_QUERYResult } from "@/sanity.types";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  categories: CATEGORIES_QUERYResult;
 }
 
-const Sidebar = ({ isOpen, onClose }: Props) => {
+const Sidebar = ({ isOpen, onClose, categories }: Props) => {
   const pathname = usePathname();
   const sidebarRef = useOutsideClick<HTMLDivElement>(onClose);
+
   return (
     <div
       className={`fixed inset-y-0 left-0 z-50 bg-darkColor/50 shadow-xl hoverEffect cursor-auto w-full ${
@@ -39,12 +40,22 @@ const Sidebar = ({ isOpen, onClose }: Props) => {
           </button>
         </div>
         <div className="flex flex-col gap-3.5 text-base font-semibold tracking-wide">
-          {headerData?.map((item) => (
+          <Link
+            onClick={onClose}
+            href={"/"}
+            className={`hover:text-white hoverEffect ${
+              pathname === `/` && "text-white"
+            }`}
+          >
+            Home
+          </Link>
+          {categories?.map((item) => (
             <Link
+              onClick={onClose}
               key={item?.title}
-              href={item?.href}
+              href={`/category/${item?.slug?.current}`}
               className={`hover:text-white hoverEffect w-24 ${
-                item?.href === pathname && "text-white"
+                pathname === `/category/${item?.slug?.current}` && "text-white"
               }`}
             >
               {item?.title}

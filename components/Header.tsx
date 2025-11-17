@@ -15,18 +15,18 @@ import { logoName } from "../app/constants/index";
 const Header = async () => {
   const user = await currentUser();
   const { userId } = await auth();
-  const categories = await getAllCategories();
   let orders: MY_ORDERS_QUERYResult | null = null;
   if (userId) {
     orders = await getMyOrders(userId);
   }
+  const categories = await getAllCategories();
 
   return (
-    <header className="border-b border-b-gray-200 py-5">
+    <header className="bg-white sticky top-0 z-50 border-b border-b-gray-200 py-5">
       <Container className="flex items-center justify-between gap-7 text-lightColor">
         <HeaderMenu categories={categories} />
         <div className="w-auto md:w-1/3 flex items-center justify-center gap-2.5">
-          <MobileMenu />
+          <MobileMenu categories={categories} />
           <Logo>{logoName}</Logo>
         </div>
         <div className="w-auto md:w-1/3 flex items-center justify-end gap-5">

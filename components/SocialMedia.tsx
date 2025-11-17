@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import Link from "next/link";
-import { Facebook, Github, Linkedin, Youtube } from "lucide-react";
+import { Facebook, Github, Instagram } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -17,19 +17,19 @@ interface Props {
 
 const socialLink = [
   {
-    title: "Github",
-    href: "https://github.com/kianush00",
-    icon: <Github className="w-5 h-5" />,
-  },
-  {
-    title: "Linkedin",
-    href: "https://linkedin.com/kianush-atighi/",
-    icon: <Linkedin className="w-5 h-5" />,
+    title: "Instagram",
+    href: "https://instagram.com/joyassolchile/",
+    icon: <Instagram className="w-5 h-5" />,
   },
   {
     title: "Facebook",
-    href: "https://www.youtube.com/@reactjsBD",
+    href: "https://www.facebook.com/joyassoltemuco/",
     icon: <Facebook className="w-5 h-5" />,
+  },
+  {
+    title: "Github",
+    href: "https://github.com/kianush00",
+    icon: <Github className="w-5 h-5" />,
   },
 ];
 

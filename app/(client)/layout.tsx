@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
+import { logoName } from "../constants";
 
 const raleway = localFont({
   src: "../fonts/Raleway.woff2",
@@ -13,7 +14,7 @@ const raleway = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Joyas Sol Ecommerce app for shoppers",
+  title: `${logoName} Ecommerce app for shoppers`,
   description: "An Ecommerce app for selling jewerly products",
 };
 

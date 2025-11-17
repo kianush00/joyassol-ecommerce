@@ -11,27 +11,47 @@ export interface Metadata {
   clerkUserId: string;
 }
 
-interface CartItems {
-  products: CartItem["product"];
-  quantity: number;
-}
-
 export async function createCheckoutSession(
   items: CartItem[],
   metadata: Metadata
 ) {
   try {
+    const validateEmptyCart = () => {
+      if (!Array.isArray(items) || items.length === 0) {
+        throw new Error("Cart is empty");
+      }
+    };
+
+    const validateItemHasNoPrice = () => {
+      for (const item of items) {
+        if (!item.product?.price || typeof item.product.price !== "number") {
+          throw new Error(`Invalid price for product ${item.product?._id}`);
+        }
+
+        if (item.quantity <= 0) {
+          throw new Error(`Invalid quantity for product ${item.product?._id}`);
+        }
+      }
+    };
+
+    // Validate cart
+    validateEmptyCart();
+    validateItemHasNoPrice();
+
+    // Retrieve existing customer or create a new one
     const customers = await stripe.customers.list({
-      email: metadata?.customerEmail,
+      email: metadata.customerEmail,
       limit: 1,
     });
+
     const customerId = customers.data.length > 0 ? customers.data[0].id : "";
+
     const sessionPayload: Stripe.Checkout.SessionCreateParams = {
       metadata: {
-        orderNumber: metadata?.orderNumber,
-        customerName: metadata?.customerName,
-        customerEmail: metadata?.customerEmail,
-        clerkUserId: metadata?.clerkUserId,
+        orderNumber: metadata.orderNumber,
+        customerName: metadata.customerName,
+        customerEmail: metadata.customerEmail,
+        clerkUserId: metadata.clerkUserId,
       },
       mode: "payment",
       allow_promotion_codes: true,
@@ -59,6 +79,7 @@ export async function createCheckoutSession(
       })),
     };
 
+    // Conditionally add customer or customer_email
     if (customerId) {
       sessionPayload.customer = customerId;
     } else {
@@ -66,9 +87,14 @@ export async function createCheckoutSession(
     }
 
     const session = await stripe.checkout.sessions.create(sessionPayload);
+
     return session.url;
-  } catch (error) {
-    console.error("Error creating checkout session:", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof Stripe.errors.StripeError) {
+      console.error("Stripe error:", error);
+    } else {
+      console.error("Unexpected checkout error:", error);
+    }
+    throw new Error("Checkout session could not be created");
   }
 }

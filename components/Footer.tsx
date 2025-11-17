@@ -6,6 +6,7 @@ import SocialMedia from "./SocialMedia";
 import { Input } from "./ui/input";
 import { categoriesData, quickLinksData } from "@/app/constants";
 import Link from "next/link";
+import { logoName } from "../app/constants/index";
 
 const Footer = () => {
   return (
@@ -14,7 +15,7 @@ const Footer = () => {
         <FooterTop />
         <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <Logo>Joyas Sol</Logo>
+            <Logo>{logoName}</Logo>
             <p className="text-gray-600 text-sm">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               Voluptate perspiciatis saepe repellendus minus.

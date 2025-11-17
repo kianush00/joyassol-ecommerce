@@ -7,6 +7,7 @@ import Link from "next/link";
 import { headerData } from "@/app/constants";
 import SocialMedia from "./SocialMedia";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { logoName } from "../app/constants/index";
 
 interface Props {
   isOpen: boolean;
@@ -31,7 +32,7 @@ const Sidebar = ({ isOpen, onClose }: Props) => {
       >
         <div className="flex items-center justify-between">
           <button onClick={onClose}>
-            <Logo className="text-white">Joyas Sol</Logo>
+            <Logo className="text-white">{logoName}</Logo>
           </button>
           <button className="hover:text-red-500 hoverEffect" onClick={onClose}>
             <X />

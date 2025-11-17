@@ -19,7 +19,7 @@ const CartPage = () => {
   const getItemCount = useCartStore((s) => s.getItemCount);
   const getTotalPrice = useCartStore((s) => s.getTotalPrice);
   const getSubtotalPrice = useCartStore((s) => s.getSubtotalPrice);
-  const cartProducts = useCartStore((s) => s.getGroupedItems());
+  const groupedItems = useCartStore((s) => s.getGroupedItems());
   const [isClient, setIsClient] = useState(false);
   const [loading, setLoading] = useState(false);
   const { isSignedIn } = useAuth();
@@ -46,6 +46,10 @@ const CartPage = () => {
     toast.success("Product deleted successfully!");
   };
 
+  /**
+   * Handles checkout process by creating a checkout session and redirecting user to checkout URL.
+   * @returns {Promise<void>}
+   */
   const handleCheckout = async () => {
     setLoading(true);
     try {
@@ -55,7 +59,7 @@ const CartPage = () => {
         customerEmail: user?.emailAddresses[0]?.emailAddress ?? "Unknown",
         clerkUserId: user!.id,
       };
-      const checkoutUrl = await createCheckoutSession(cartProducts, metadata);
+      const checkoutUrl = await createCheckoutSession(groupedItems, metadata);
       if (checkoutUrl) {
         globalThis.location.href = checkoutUrl;
       }
@@ -70,9 +74,9 @@ const CartPage = () => {
     <div className="bg-gray-50 pb-52 md:pb-10">
       {isSignedIn ? (
         <Container>
-          {cartProducts?.length ? (
+          {groupedItems.length ? (
             <CartContent
-              cartProducts={cartProducts}
+              cartProducts={groupedItems}
               loading={loading}
               getItemCount={getItemCount}
               getSubtotalPrice={getSubtotalPrice}

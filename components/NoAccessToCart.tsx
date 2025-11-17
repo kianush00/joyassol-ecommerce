@@ -9,6 +9,7 @@ import {
 import Logo from "./Logo";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
+import { logoName } from "../app/constants/index";
 
 const NoAccessToCart = () => {
   return (
@@ -16,7 +17,7 @@ const NoAccessToCart = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex justify-center">
-            <Logo>Joyas Sol</Logo>
+            <Logo>{logoName}</Logo>
           </div>
           <CardTitle className="text-2xl font-bold text-center">
             Welcome Back!

@@ -1,3 +1,5 @@
+export const logoName = "Joyas Sol";
+
 export const headerData = [
   { title: "Home", href: "/" },
   { title: "Men", href: "/men-s-fashion" },
@@ -33,27 +35,25 @@ export const categoriesData = [
 
 export const faqsData = [
   {
-    question: "What services does Tulos offer?",
-    answer:
-      "Tulos offers a wide range of technology solutions including custom software development, cloud services, and digital transformation consulting.",
+    question: `What services does ${logoName} offer?`,
+    answer: `{logoName} offers a wide range of technology solutions including custom software development, cloud services, and digital transformation consulting.`,
   },
   {
-    question: "How can I get support for Tulos products?",
+    question: `How can I get support for ${logoName} products?`,
     answer:
-      "You can reach our support team through our contact page or by emailing support@tulos.com.",
+      "You can reach our support team through our contact page or by emailing esoliso74@gmail.com.",
   },
   {
-    question: "Does Tulos offer training for its products?",
+    question: `Does ${logoName} offer training for its products?`,
     answer:
       "Yes, we offer comprehensive training programs for all our products and services. Please contact our sales team for more information.",
   },
   {
-    question: "What industries does Tulos serve?",
-    answer:
-      "Tulos serves a wide range of industries including finance, healthcare, retail, and manufacturing.",
+    question: `What industries does ${logoName} serve?`,
+    answer: `${logoName} serves a wide range of industries including finance, healthcare, retail, and manufacturing.`,
   },
   {
-    question: "How does Tulos ensure data security?",
+    question: `How does ${logoName} ensure data security?`,
     answer:
       "We employ industry-standard security measures and comply with all relevant data protection regulations to ensure the security of our clients' data.",
   },

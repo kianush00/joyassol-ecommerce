@@ -21,7 +21,7 @@ const SearchInput = ({
         placeholder="Search your product here..."
         className="flex-1 rounded-md py-5"
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value.trimStart())}
       />
 
       {/* Clear button */}

@@ -1,6 +1,6 @@
 "use client";
 import { Search } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,47 +8,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { client } from "@/sanity/lib/client";
 import { Product } from "@/sanity.types";
 import SearchInput from "./SearchInput";
 import SearchEmptyState from "./SearchEmptyState";
 import SearchResultItem from "./SearchResultItem";
 import SearchLoadingState from "./SearchLoadingState";
+import { useProductSearch } from "@/hooks/useProductSearch";
 
 const SearchBar = () => {
-  const [search, setSearch] = useState("");
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { search, setSearch, products, loading } = useProductSearch(300);
   const [showSearch, setShowSearch] = useState(false);
-
-  // Fetch products from Sanity based on search input
-  const fetchProducts = useCallback(async () => {
-    if (!search.trim()) {
-      setProducts([]);
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const query = `*[_type == "product" && name match $search] | order(name asc)`;
-      const params = { search: `*${search}*` };
-      const response = await client.fetch(query, params);
-      setProducts(response);
-    } catch (error) {
-      console.error("Product fetching Error", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [search]);
-
-  // Debounce input changes to reduce API calls
-  useEffect(() => {
-    setLoading(true);
-    const debounceTimer = setTimeout(() => {
-      fetchProducts();
-    }, 300); // Delay of 300ms
-    return () => clearTimeout(debounceTimer); // Cleanup the timer
-  }, [search, fetchProducts]);
 
   return (
     <Dialog open={showSearch} onOpenChange={() => setShowSearch(!showSearch)}>

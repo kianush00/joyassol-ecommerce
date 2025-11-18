@@ -24,12 +24,14 @@ const SearchBar = () => {
   const [loading, setLoading] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
+  // Fetch products from Sanity based on search input
   const fetchProducts = useCallback(async () => {
     if (!search) {
       setProducts([]);
+      setLoading(false);
       return;
     }
-    setLoading(true);
+
     try {
       const query = `*[_type == "product" && name match $search] | order(name asc)`;
       const params = { search: `*${search}*` };
@@ -42,11 +44,13 @@ const SearchBar = () => {
     }
   }, [search]);
 
+  // Debounce input changes to reduce API calls
   useEffect(() => {
+    setLoading(true);
     const debounceTimer = setTimeout(() => {
       fetchProducts();
-    }, 300);
-    return () => clearTimeout(debounceTimer);
+    }, 300); // Delay of 300ms
+    return () => clearTimeout(debounceTimer); // Cleanup the timer
   }, [search, fetchProducts]);
 
   return (
@@ -136,7 +140,7 @@ const SearchBar = () => {
               ))
             ) : (
               <div className="text-center py-10 font-semibold tracking-wide">
-                {search && !loading ? (
+                {search ? (
                   <p>
                     Nothing matches with the keyword{" "}
                     <span className="underline text-red-600">{search}</span>.

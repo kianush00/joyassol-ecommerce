@@ -10,14 +10,14 @@ export function useProductSearch(debounceDelay: number = 300) {
 
   // Fetch products from Sanity based on search input
   const fetchProducts = useCallback(async () => {
-    if (!search.trim()) {
-      setProducts([]);
-      setLoading(false);
-      return;
-    }
-
     try {
-      const query = `*[_type == "product" && name match $search] | order(name asc)`;
+      const query = `*[
+        _type == "product" &&
+        (
+          name match $search ||
+          intro match $search
+        )
+      ][0...50] | order(name asc)`;
       const params = { search: `*${search}*` };
       const response = await client.fetch<Product[]>(query, params);
       setProducts(response);
@@ -30,6 +30,13 @@ export function useProductSearch(debounceDelay: number = 300) {
 
   // Debounce behavior
   useEffect(() => {
+    // Clear products if search input is empty or it's too long
+    if (!search.trim() || search.length > 80) {
+      setProducts([]);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     const timeout = setTimeout(fetchProducts, debounceDelay);
     return () => clearTimeout(timeout);

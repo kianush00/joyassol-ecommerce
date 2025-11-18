@@ -5,6 +5,7 @@ import { urlFor } from "@/sanity/lib/image";
 import PriceView from "../PriceView";
 import AddToCartButton from "../AddToCartButton";
 import { Product } from "@/sanity.types";
+import { getProductUrl } from "@/app/constants";
 
 interface Props {
   product: Product;
@@ -17,7 +18,7 @@ const SearchResultItem = ({ product, setShowSearch }: Props) => {
       <div className="flex items-center p-1">
         {/* PRODUCT IMAGE */}
         <Link
-          href={`/product/${product.slug?.current}`}
+          href={getProductUrl(product.slug?.current)}
           className="h-20 w-20 md:h-24 md:w-24 shrink-0 border border-darkColor/20 rounded-md overflow-hidden group"
           onClick={() => setShowSearch(false)}
         >
@@ -35,7 +36,7 @@ const SearchResultItem = ({ product, setShowSearch }: Props) => {
         {/* PRODUCT INFO */}
         <div className="px-4 py-2 grow">
           <Link
-            href={`/product/${product.slug?.current}`}
+            href={getProductUrl(product.slug?.current)}
             onClick={() => setShowSearch(false)}
           >
             <h3 className="text-sm md:text-lg font-semibold text-gray-800 line-clamp-1">

@@ -5,16 +5,9 @@ import { Input } from "../ui/input";
 interface Props {
   search: string;
   setSearch: (search: string) => void;
-  showSearch: boolean;
-  setShowSearch: (showSearch: boolean) => void;
 }
 
-const SearchInput = ({
-  search,
-  setSearch,
-  showSearch,
-  setShowSearch,
-}: Props) => {
+const SearchInput = ({ search, setSearch }: Props) => {
   return (
     <form className="relative" onSubmit={(e) => e.preventDefault()}>
       <Input
@@ -34,11 +27,10 @@ const SearchInput = ({
 
       {/* Submit button */}
       <button
-        type="submit"
+        type="button"
         className={`absolute w-10 h-full top-0 right-0 flex items-center justify-center rounded-tr-md rounded-br-md hover:bg-darkColor hover:text-white hoverEffect ${
           search ? "bg-darkColor text-white" : "bg-darkColor/10"
         }`}
-        onClick={() => setShowSearch(!showSearch)}
       >
         <Search className="w-5 h-5" />
       </button>

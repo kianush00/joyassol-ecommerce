@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import PriceView from "./PriceView";
 import AddToCartButton from "./AddToCartButton";
+import { getProductUrl } from "@/app/constants";
 
 interface Props {
   product: Product;
@@ -15,7 +16,7 @@ const ProductCard = ({ product }: Props) => {
     <div className="group text-sm rounded-lg overflow-hidden">
       <div className="bg-linear-to-r from-zinc-200 via-zinc-300 to-zinc-200 overflow-hidden relative">
         {product?.images && (
-          <Link href={`/product/${product?.slug?.current}`}>
+          <Link href={getProductUrl(product.slug?.current)}>
             <Image
               src={urlFor(product?.images[0]).url()}
               width={500}

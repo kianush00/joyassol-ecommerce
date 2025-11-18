@@ -12,6 +12,7 @@ import {
 import { Heart, Trash } from "lucide-react";
 import PriceFormatter from "./PriceFormatter";
 import QuantityButtons from "./QuantityButtons";
+import { getProductUrl } from "@/app/constants";
 
 interface Props {
   cartProducts: CartItem[];
@@ -38,7 +39,7 @@ const CartProductsList = ({
               {/* Product Image */}
               {product.images && (
                 <Link
-                  href={`/product/${product.slug?.current}`}
+                  href={getProductUrl(product.slug?.current)}
                   className="border p-0.5 md:p-1 mr-2 rounded-md overflow-hidden group"
                 >
                   <Image

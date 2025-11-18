@@ -1,4 +1,7 @@
 export const logoName = "Joyas Sol";
+export const getProductUrl = (slug: string | undefined) => {
+  return `/product/${slug}`;
+};
 
 export const headerData = [
   { title: "Home", href: "/" },

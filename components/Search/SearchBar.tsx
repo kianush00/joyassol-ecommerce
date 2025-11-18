@@ -20,9 +20,12 @@ const SearchBar = () => {
   const [showSearch, setShowSearch] = useState(false);
 
   return (
-    <Dialog open={showSearch} onOpenChange={() => setShowSearch(!showSearch)}>
+    <Dialog open={showSearch} onOpenChange={setShowSearch}>
       {/* Trigger Button */}
-      <DialogTrigger onClick={() => setShowSearch(!showSearch)}>
+      <DialogTrigger
+        aria-label="Open search dialog"
+        onClick={() => setShowSearch(true)}
+      >
         <Search className="w-5 h-5 hover:text-darkColor hoverEffect" />
       </DialogTrigger>
 
@@ -32,12 +35,7 @@ const SearchBar = () => {
           <DialogTitle className="mb-1">Product Searchbar</DialogTitle>
 
           {/* SEARCH INPUT */}
-          <SearchInput
-            search={search}
-            setSearch={setSearch}
-            showSearch={showSearch}
-            setShowSearch={setShowSearch}
-          />
+          <SearchInput search={search} setSearch={setSearch} />
         </DialogHeader>
 
         {/* SEARCH RESULTS */}

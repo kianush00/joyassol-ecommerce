@@ -3,7 +3,7 @@ import HeaderMenu from "./HeaderMenu";
 import Logo from "./Logo";
 import Container from "./Container";
 import MobileMenu from "./MobileMenu";
-import SearchBar from "./SearchBar";
+import SearchBar from "./Search/SearchBar";
 import CartIcon from "./CartIcon";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { ClerkLoaded, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";

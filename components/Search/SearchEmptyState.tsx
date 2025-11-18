@@ -14,22 +14,23 @@ const SearchEmptyState = ({ search }: Props) => {
       {/* Search text is too long */}
       {isTooLong && (
         <p className="text-red-600">
-          Your search text is too long. Please submit a shorter query.
+          El texto de búsqueda es demasiado largo. Introduzca una consulta más
+          corta.
         </p>
       )}
       {/* No results for a valid search */}
       {!isTooLong && search && (
         <p>
-          Nothing matches with the keyword{" "}
-          <span className="underline text-red-600">{search}</span>. Please try
-          something else.
+          No hay resultados para la palabra clave{" "}
+          <span className="underline text-red-600">{search}</span>. Inténtelo de
+          nuevo con otra palabra.
         </p>
       )}
       {/* Initial empty state */}
       {!search && (
         <p className="text-green-600 flex items-center justify-center gap-1">
           <Search className="w-5 h-5" />
-          Search and explore your products from {logoName}.
+          Busca y explora tus productos de {logoName}.
         </p>
       )}
     </div>

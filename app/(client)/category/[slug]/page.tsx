@@ -14,7 +14,7 @@ const CategoryPage = async ({ params }: Props) => {
   return (
     <Container className="py-10">
       <Title className="text-xl">
-        Products by Category{" "}
+        Productos por categoría{" "}
         <span className="font-bold text-green-600 capitalize tracking-wide">
           {slug}
         </span>

@@ -32,7 +32,9 @@ const SearchBar = () => {
       {/* Modal Content */}
       <DialogContent className="min-w-3xl max-w-5xl min-h-[90vh] max-h-[90vh] flex flex-col overflow-hidden">
         <DialogHeader>
-          <DialogTitle className="mb-1">Product Searchbar</DialogTitle>
+          <DialogTitle className="mb-1">
+            Barra de búsqueda de productos
+          </DialogTitle>
 
           {/* SEARCH INPUT */}
           <SearchInput search={search} setSearch={setSearch} />

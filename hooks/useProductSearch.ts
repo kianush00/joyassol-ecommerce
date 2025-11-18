@@ -4,6 +4,8 @@ import { client } from "@/sanity/lib/client";
 import { Product } from "@/sanity.types";
 import { searchTextIsTooLong } from "@/app/constants";
 
+const MAX_RESULTS = 50;
+
 export function useProductSearch(debounceDelay: number = 300) {
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,7 +20,7 @@ export function useProductSearch(debounceDelay: number = 300) {
           name match $search ||
           intro match $search
         )
-      ][0...50] | order(name asc)`;
+      ][0...${MAX_RESULTS}] | order(name asc)`;
       const params = { search: `*${search}*` };
       const response = await client.fetch<Product[]>(query, params);
       setProducts(response);

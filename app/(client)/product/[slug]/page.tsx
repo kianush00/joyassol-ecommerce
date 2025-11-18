@@ -36,9 +36,13 @@ const SingleProductPage = async ({
             className="text-lg font-bold"
           />
         </div>
-        {product?.stock && (
+        {product?.stock ? (
           <p className="bg-green-100 w-24 text-center text-green-600 text-sm py-2.5 font-semibold rounded-lg">
-            In Stock
+            En Stock
+          </p>
+        ) : (
+          <p className="bg-red-100 w-24 text-center text-red-600 text-sm py-2.5 font-semibold rounded-lg">
+            Agotado
           </p>
         )}
         <p className="text-sm text-gray-600 tracking-wide">
@@ -57,19 +61,19 @@ const SingleProductPage = async ({
         <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-b-gray-200 py-5 -mt-2">
           <div className="flex items-center gap-2 text-sm text-black hover:text-red-600 hoverEffect">
             <BoxIcon className="w-5 h-5" />
-            <p>Compare color</p>
+            <p>Comparar color</p>
           </div>
           <div className="flex items-center gap-2 text-sm text-black hover:text-red-600 hoverEffect">
             <FileQuestion className="w-5 h-5" />
-            <p>Ask a question</p>
+            <p>Haz una pregunta</p>
           </div>
           <div className="flex items-center gap-2 text-sm text-black hover:text-red-600 hoverEffect">
             <ListOrderedIcon className="w-5 h-5" />
-            <p>Delivery & Return</p>
+            <p>Delivery & Reembolso</p>
           </div>
           <div className="flex items-center gap-2 text-sm text-black hover:text-red-600 hoverEffect">
             <Share className="w-5 h-5" />
-            <p>Share</p>
+            <p>Compartir</p>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-5">
@@ -83,10 +87,10 @@ const SingleProductPage = async ({
           </div>
           <div className="border border-darkBlue/20 text-center p-3 hover:border-darkBlue rounded-md hoverEffect">
             <p className="text-base font-semibold text-darkColor">
-              Flexible Payment
+              Pago Flexible
             </p>
             <p className="text-sm text-gray-500">
-              Pay with Multiple Credit Cards
+              Pago con Múltiples Tarjetas de Crédito
             </p>
           </div>
         </div>

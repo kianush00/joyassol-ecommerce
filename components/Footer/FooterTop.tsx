@@ -9,14 +9,14 @@ interface Props {
 
 const data: Props[] = [
   {
-    title: "Visitanos",
+    title: "Visítanos",
     subtitle: "Temuco, Chile",
     icon: (
       <MapPin className="text-gray-600 group-hover:text-darkColor transition-colors" />
     ),
   },
   {
-    title: "Llamanos",
+    title: "Llámanos",
     subtitle: "+56 9 8733 4343",
     icon: (
       <Phone className="text-gray-600 group-hover:text-darkColor transition-colors" />
@@ -30,7 +30,7 @@ const data: Props[] = [
     ),
   },
   {
-    title: "Mandanos Email",
+    title: "Mándanos Email",
     subtitle: "esoliso74@gmail.com",
     icon: (
       <MapPin className="text-gray-600 group-hover:text-darkColor transition-colors" />

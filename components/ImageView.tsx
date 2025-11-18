@@ -28,6 +28,10 @@ interface Props {
 const ImageView = ({ images = [] }: Props) => {
   const [active, setActive] = useState(images[0] ?? null);
   const mainUrl = useMemo(() => urlFor(active).url(), [active]);
+  const thumbUrls = useMemo(
+    () => images.map((img) => urlFor(img).url()),
+    [images]
+  );
 
   // Fallback if no images
   if (!images.length) {
@@ -60,26 +64,23 @@ const ImageView = ({ images = [] }: Props) => {
         </motion.div>
       </AnimatePresence>
       <div className="grid grid-cols-6 gap-2 h-20 md:h-28">
-        {images?.map((image) => {
-          const thumbUrl = urlFor(image).url();
-          return (
-            <button
-              key={image._key}
-              onMouseEnter={() => setActive(image)}
-              className={`border rounded-md overflow-hidden ${
-                active?._key === image._key ? "ring-1 ring-darkColor" : ""
-              }`}
-            >
-              <Image
-                src={thumbUrl}
-                alt={`Thumbnail ${image._key}`}
-                width={100}
-                height={100}
-                className="w-full h-full object-cover"
-              />
-            </button>
-          );
-        })}
+        {images?.map((image, index) => (
+          <button
+            key={image._key}
+            onMouseEnter={() => setActive(image)}
+            className={`border rounded-md overflow-hidden ${
+              active?._key === image._key ? "ring-1 ring-darkColor" : ""
+            }`}
+          >
+            <Image
+              src={thumbUrls[index]}
+              alt={`Thumbnail ${image._key}`}
+              width={100}
+              height={100}
+              className="w-full h-full object-cover"
+            />
+          </button>
+        ))}
       </div>
     </div>
   );

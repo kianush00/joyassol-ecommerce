@@ -21,7 +21,7 @@ const NoProductsAvailable = ({ selectedTab, className }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <h2 className="text-2xl font-bold text-gray-800">
-          No Product Available
+          No hay productos disponibles
         </h2>
       </motion.div>
       <motion.p
@@ -30,11 +30,11 @@ const NoProductsAvailable = ({ selectedTab, className }: Props) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
-        We&apos;re sorry, but there are no{" "}
+        Lo sentimos, pero no hay productos disponibles para la categoría{" "}
         <span className="text-base font-semibold text-darkColor">
           {selectedTab}
-        </span>{" "}
-        products available.
+        </span>
+        {"."}
       </motion.p>
       <motion.div
         animate={{ scale: [1, 1.1, 1] }}
@@ -42,7 +42,7 @@ const NoProductsAvailable = ({ selectedTab, className }: Props) => {
         className="flex items-center space-x-2 text-blue-600"
       >
         <Loader2 className="w-4 h-4 animate-spin" />{" "}
-        <span>We&apos;re restocking shortly</span>
+        <span>Estaremos reponiendo lo más pronto posible</span>
       </motion.div>
       <motion.p
         initial={{ opacity: 0 }}
@@ -50,7 +50,7 @@ const NoProductsAvailable = ({ selectedTab, className }: Props) => {
         transition={{ delay: 0.4, duration: 0.5 }}
         className="text-sm text-gray-600"
       >
-        Please check back later or explore our other product categories.
+        Vuelva a consultar más tarde o explore nuestras categorías de productos.
       </motion.p>
     </div>
   );

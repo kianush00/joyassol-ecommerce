@@ -1,8 +1,8 @@
-import AddToCartButton from "@/components/AddToCartButton";
+import AddToCartButton from "@/components/Cart/AddToCartButton";
 import Container from "@/components/Container";
 import ImageView from "@/components/ImageView";
-import PriceView from "@/components/PriceView";
-import ProductCharacteristics from "@/components/ProductCharacteristics";
+import PriceView from "@/components/Price/PriceView";
+import ProductCharacteristics from "@/components/Product/ProductCharacteristics";
 import { getProductBySlug } from "@/sanity/helpers/queries";
 import {
   BoxIcon,
@@ -12,7 +12,6 @@ import {
   Share,
 } from "lucide-react";
 import { notFound } from "next/navigation";
-import React from "react";
 
 const SingleProductPage = async ({
   params,

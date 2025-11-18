@@ -1,16 +1,15 @@
-import React from "react";
 import HeaderMenu from "./HeaderMenu";
-import Logo from "./Logo";
-import Container from "./Container";
-import MobileMenu from "./MobileMenu";
-import SearchBar from "./Search/SearchBar";
-import CartIcon from "./CartIcon";
+import Logo from "../Logo";
+import Container from "../Container";
+import MobileMenu from "../MobileMenu";
+import SearchBar from "../Search/SearchBar";
+import CartIcon from "../Cart/CartIcon";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { ClerkLoaded, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
 import { getAllCategories, getMyOrders } from "@/sanity/helpers/queries";
 import { MY_ORDERS_QUERYResult } from "@/sanity.types";
-import OrdersIcon from "./OrdersIcon";
-import { logoName } from "../app/constants/index";
+import OrdersIcon from "../Order/OrdersIcon";
+import { logoName } from "@/app/constants";
 
 const Header = async () => {
   const user = await currentUser();

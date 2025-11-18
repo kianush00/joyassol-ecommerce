@@ -1,7 +1,7 @@
 "use client";
 import { CATEGORIES_QUERYResult, Product } from "@/sanity.types";
-import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import { client } from "@/sanity/lib/client";
 import { Loader2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";

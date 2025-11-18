@@ -1,4 +1,3 @@
-import React from "react";
 import PriceFormatter from "./PriceFormatter";
 import { cn } from "@/lib/utils";
 

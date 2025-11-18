@@ -4,7 +4,7 @@ import {
   SanityImageCrop,
   SanityImageHotspot,
 } from "@/sanity.types";
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";

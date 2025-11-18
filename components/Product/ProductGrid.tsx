@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import HomeTabbar from "./HomeTabbar";
+import { useEffect, useState } from "react";
+import HomeTabbar from "../HomeTabbar";
 import { productType } from "@/app/constants";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/sanity.types";

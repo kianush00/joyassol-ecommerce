@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import PriceFormatter from "@/components/PriceFormatter";
+import PriceFormatter from "@/components/Price/PriceFormatter";
 import Image from "next/image";
 import Link from "next/link";
 import paypalLogo from "@/images/paypalLogo.png";

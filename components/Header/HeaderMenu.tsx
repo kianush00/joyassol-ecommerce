@@ -1,6 +1,6 @@
 "use client";
 import { CATEGORIES_QUERYResult } from "@/sanity.types";
-import MenuItem from "./MenuItem";
+import MenuItem from "../MenuItem";
 
 interface Props {
   categories: CATEGORIES_QUERYResult;

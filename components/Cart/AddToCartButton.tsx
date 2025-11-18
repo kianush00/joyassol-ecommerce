@@ -1,11 +1,10 @@
 "use client";
 import { Product } from "@/sanity.types";
-import React from "react";
 import { toast } from "react-hot-toast";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import QuantityButtons from "./QuantityButtons";
-import PriceFormatter from "./PriceFormatter";
+import PriceFormatter from "../Price/PriceFormatter";
 import useCartStore from "@/store";
 
 interface Props {

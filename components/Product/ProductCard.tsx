@@ -2,9 +2,8 @@ import { Product } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import PriceView from "./PriceView";
-import AddToCartButton from "./AddToCartButton";
+import PriceView from "../Price/PriceView";
+import AddToCartButton from "../Cart/AddToCartButton";
 import { getProductUrl } from "@/app/constants";
 
 interface Props {

@@ -1,8 +1,7 @@
 "use client";
 import Container from "@/components/Container";
-import EmptyCart from "@/components/EmptyCart";
+import EmptyCart from "@/components/Cart/EmptyCart";
 import Loading from "@/components/Loading";
-import NoAccessToCart from "@/components/NoAccessToCart";
 import useCartStore from "@/store";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
@@ -11,7 +10,8 @@ import {
   createCheckoutSession,
   Metadata,
 } from "@/actions/createCheckoutSession";
-import CartContent from "@/components/CartContent";
+import CartContent from "@/components/Cart/CartContent";
+import NoAccessToCart from "@/components/Cart/NoAccessToCart";
 
 const CartPage = () => {
   const deleteCartProduct = useCartStore((s) => s.deleteCartProduct);

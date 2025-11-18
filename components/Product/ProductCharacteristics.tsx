@@ -1,11 +1,10 @@
 import { Product } from "@/sanity.types";
-import React from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./ui/accordion";
+} from "../ui/accordion";
 
 interface Props {
   product: Product;

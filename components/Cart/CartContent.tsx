@@ -1,8 +1,8 @@
 "use client";
 import { ShoppingBag } from "lucide-react";
 import CartProductsList from "./CartProductsList";
-import OrderSummary from "./OrderSummary";
-import { Button } from "./ui/button";
+import OrderSummary from "../Order/OrderSummary";
+import { Button } from "../ui/button";
 import { CartItem } from "@/store";
 
 interface Props {

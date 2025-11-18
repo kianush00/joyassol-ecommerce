@@ -1,7 +1,7 @@
 "use client";
 import React, { useCallback, useState } from "react";
-import { TableBody, TableCell, TableRow } from "./ui/table";
-import PriceFormatter from "./PriceFormatter";
+import { TableBody, TableCell, TableRow } from "../ui/table";
+import PriceFormatter from "../Price/PriceFormatter";
 import { MY_ORDERS_QUERYResult } from "@/sanity.types";
 import OrderDetailsDialog from "./OrderDetailsDialog";
 import {
@@ -9,7 +9,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "../ui/tooltip";
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";

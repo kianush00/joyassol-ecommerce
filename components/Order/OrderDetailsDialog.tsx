@@ -1,5 +1,4 @@
-import React from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import {
   Table,
   TableBody,
@@ -7,12 +6,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
-import PriceFormatter from "./PriceFormatter";
+} from "../ui/table";
+import PriceFormatter from "../Price/PriceFormatter";
 import { MY_ORDERS_QUERYResult } from "@/sanity.types";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import Link from "next/link";
 
 interface OrderDetailsDialogProps {

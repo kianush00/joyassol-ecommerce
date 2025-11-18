@@ -15,7 +15,7 @@ const Loading = () => {
           className="flex items-center space-x-2 text-green-800"
         >
           <Loader2 className="animate-spin" />
-          <span className="font-semibold tracking-wide">
+          <span className="font-semibold tracking-wide mt-2">
             {logoName} is loading...
           </span>
         </motion.div>

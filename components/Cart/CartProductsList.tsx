@@ -8,9 +8,9 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "../ui/tooltip";
 import { Heart, Trash } from "lucide-react";
-import PriceFormatter from "./PriceFormatter";
+import PriceFormatter from "../Price/PriceFormatter";
 import QuantityButtons from "./QuantityButtons";
 import { getProductUrl } from "@/app/constants";
 

@@ -1,8 +1,7 @@
-import CategoryProducts from "@/components/CategoryProducts";
+import CategoryProducts from "@/components/Product/CategoryProducts";
 import Container from "@/components/Container";
 import Title from "@/components/Title";
 import { getAllCategories } from "@/sanity/helpers/queries";
-import React from "react";
 
 interface Props {
   params: Promise<{ slug: string }>;

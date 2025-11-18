@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/sanity.types";
+import { searchTextIsTooLong } from "@/app/constants";
 
 export function useProductSearch(debounceDelay: number = 300) {
   const [search, setSearch] = useState("");
@@ -31,7 +32,7 @@ export function useProductSearch(debounceDelay: number = 300) {
   // Debounce behavior
   useEffect(() => {
     // Clear products if search input is empty or it's too long
-    if (!search.trim() || search.length > 80) {
+    if (!search.trim() || searchTextIsTooLong(search.length)) {
       setProducts([]);
       setLoading(false);
       return;

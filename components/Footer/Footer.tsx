@@ -11,13 +11,17 @@ const Footer = () => {
   return (
     <footer className="bg-white border-t">
       <Container>
+        {/* Top section with contact info */}
         <FooterTop />
+
+        {/* Main footer content */}
         <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Logo>{logoName}</Logo>
             <p className="text-gray-600 text-sm">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Voluptate perspiciatis saepe repellendus minus.
+              Descubre las mejores joyas caseras en Joyas Sol, con estilos
+              únicos y precios accesibles. ¡Explora nuestra colección y
+              encuentra las joyas perfectas para tu estilo!
             </p>
             <SocialMedia
               className="text-darkColor/60"
@@ -25,6 +29,7 @@ const Footer = () => {
               tooltipClassName="bg-darkColor text-white"
             />
           </div>
+
           <div>
             <h3 className="font-semibold text-darkColor mb-4">Quick Links</h3>
             <div className="flex flex-col gap-3">
@@ -39,8 +44,9 @@ const Footer = () => {
               ))}
             </div>
           </div>
+
           <div>
-            <h3 className="font-semibold text-darkColor mb-4">Categories</h3>
+            <h3 className="font-semibold text-darkColor mb-4">Categorías</h3>
             <div className="flex flex-col gap-3">
               {categoriesData?.map((item) => (
                 <Link
@@ -53,11 +59,12 @@ const Footer = () => {
               ))}
             </div>
           </div>
+
           <div>
             <h3 className="font-semibold text-darkColor mb-4">Newsletter</h3>
             <p className="text-gray-600 text-sm mb-4">
-              Subscribe to our newsletter to receive updates and exclusive
-              offers.
+              Suscríbase a nuestro boletín para recibir actualizaciones y
+              ofertas exclusivas.
             </p>
             <form className="space-y-3">
               <Input
@@ -74,6 +81,14 @@ const Footer = () => {
               </button>
             </form>
           </div>
+        </div>
+
+        {/* Bottom copyright section */}
+        <div className="py-6 border-t text-center text-sm text-gray-600">
+          <p>
+            © {new Date().getFullYear()} Joyas Sol. Todos los derechos
+            reservados.
+          </p>
         </div>
       </Container>
     </footer>

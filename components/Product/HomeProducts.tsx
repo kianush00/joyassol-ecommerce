@@ -30,7 +30,7 @@ const HomeProducts = () => {
 
       {!loading &&
         !error &&
-        (products?.length ? (
+        (products.length ? (
           <ProductGrid products={products} />
         ) : (
           <NoProductsAvailable selectedTab={selectedTab} />

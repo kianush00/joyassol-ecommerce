@@ -37,7 +37,6 @@ const CategoryProducts = ({ categories, slug }: Props) => {
 
   return (
     <div className="py-5 flex flex-col md:flex-row items-start gap-5">
-      {/* Categories sidebar */}
       <CategoriesSidebar
         categories={categories}
         currentSlug={currentSlug}

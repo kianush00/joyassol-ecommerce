@@ -40,10 +40,18 @@ export const getProductBySlug = async (
   }
 };
 
-export const getAllCategories = async (): Promise<CATEGORIES_QUERYResult> => {
+export const getAllCategories = async (
+  quantity?: number
+): Promise<CATEGORIES_QUERYResult> => {
+  // Default to 50
+  if (!quantity || quantity < 1) {
+    quantity = 50;
+  }
+
   const CATEGORIES_QUERY = defineQuery(
-    `*[_type == "category"] | order(name asc)`
+    `*[_type == "category"][0...${quantity}] | order(name asc)`
   );
+
   try {
     const categories = await sanityFetch({
       query: CATEGORIES_QUERY,

@@ -31,10 +31,10 @@ export const quickLinksData = [
 ];
 
 export const categoriesData = [
-  { title: "Men", href: "/men-s-fashion" },
-  { title: "Woman", href: "/woman" },
-  { title: "Kids", href: "/kids" },
-  { title: "Others", href: "/others" },
+  { title: "Men", href: "/category/men-s-fashion" },
+  { title: "Woman", href: "/category/woman" },
+  { title: "Kids", href: "/category/kids" },
+  { title: "Others", href: "/category/others" },
 ];
 
 export const faqsData = [

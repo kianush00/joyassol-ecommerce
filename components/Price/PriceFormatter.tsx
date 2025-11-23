@@ -6,10 +6,12 @@ interface Props {
 }
 
 const PriceFormatter = ({ amount, className }: Props) => {
-  const formattedPrice = Number(amount).toLocaleString("en-US", {
+  const safeAmount = typeof amount === "number" ? amount : 0;
+  const formattedPrice = safeAmount.toLocaleString("es-CL", {
     style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
+    currency: "CLP",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   });
   return (
     <span className={cn("text-sm font-semibold text-darkColor", className)}>

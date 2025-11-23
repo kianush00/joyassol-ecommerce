@@ -4,8 +4,8 @@ import Logo from "../Logo";
 import SocialMedia from "../SocialMedia";
 import { Input } from "../ui/input";
 import { categoriesData, quickLinksData } from "@/app/constants";
-import Link from "next/link";
 import { logoName } from "../../app/constants/index";
+import FooterLinkColumn from "./FooterLinkColumn";
 
 const Footer = () => {
   return (
@@ -16,6 +16,7 @@ const Footer = () => {
 
         {/* Main footer content */}
         <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Logo and description */}
           <div className="space-y-4">
             <Logo>{logoName}</Logo>
             <p className="text-gray-600 text-sm">
@@ -30,36 +31,11 @@ const Footer = () => {
             />
           </div>
 
-          <div>
-            <h3 className="font-semibold text-darkColor mb-4">Quick Links</h3>
-            <div className="flex flex-col gap-3">
-              {quickLinksData?.map((item) => (
-                <Link
-                  key={item?.title}
-                  href={item?.href}
-                  className="text-gray-600 hover:text-darkColor text-sm font-medium hoverEffect"
-                >
-                  {item?.title}
-                </Link>
-              ))}
-            </div>
-          </div>
+          {/* Quick links and categories */}
+          <FooterLinkColumn title="Quick Links" links={quickLinksData} />
+          <FooterLinkColumn title="Categorías" links={categoriesData} />
 
-          <div>
-            <h3 className="font-semibold text-darkColor mb-4">Categorías</h3>
-            <div className="flex flex-col gap-3">
-              {categoriesData?.map((item) => (
-                <Link
-                  key={item?.title}
-                  href={`/category${item?.href}`}
-                  className="text-gray-600 hover:text-darkColor text-sm font-medium hoverEffect"
-                >
-                  {item?.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-
+          {/* Newsletter */}
           <div>
             <h3 className="font-semibold text-darkColor mb-4">Newsletter</h3>
             <p className="text-gray-600 text-sm mb-4">

@@ -16,7 +16,7 @@ const Loading = () => {
         >
           <Loader2 className="animate-spin" />
           <span className="font-semibold tracking-wide mt-2">
-            {logoName} is loading...
+            {logoName} está cargando...
           </span>
         </motion.div>
       </div>

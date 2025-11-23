@@ -34,16 +34,16 @@ const CartPage = () => {
 
   const handleResetCart = () => {
     const confirmed = globalThis.confirm(
-      "Are you sure you want to reset cart?"
+      "¿Estás segur@ de que quieres restablecer el carrito?"
     );
     if (confirmed) {
       resetCart();
-      toast.success("Your cart reset successfully!");
+      toast.success("¡Tu carrito se ha reiniciado correctamente!");
     }
   };
   const handleDeleteProduct = (id: string) => {
     deleteCartProduct(id);
-    toast.success("Product deleted successfully!");
+    toast.success("¡El producto se ha eliminado correctamente!");
   };
 
   /**

@@ -25,7 +25,7 @@ export default function CartContent({
   handleDeleteProduct,
   handleResetCart,
   handleCheckout,
-}: Props) {
+}: Readonly<Props>) {
   return (
     <>
       {/* Cart header */}

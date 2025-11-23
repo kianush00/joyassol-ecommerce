@@ -34,11 +34,11 @@ const EmptyCart = () => {
         </motion.div>
         <div className="text-center space-y-4">
           <h2 className="text-3xl font-bold text-gray-800">
-            Your cart is feeling lonely
+            Tu carrito está vacío
           </h2>
           <p className="text-gray-600">
-            It looks like you haven&apos;t added anything to your cart yet.
-            Let&apos; change and find some amazing products for you!
+            Parece que aún no has añadido nada a tu carrito. ¡Vamos a cambiarlo
+            y encontrar productos increíbles para ti!
           </p>
         </div>
         <Link

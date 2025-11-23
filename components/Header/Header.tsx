@@ -4,20 +4,24 @@ import Container from "../Container";
 import MobileMenu from "../MobileMenu";
 import SearchBar from "../Search/SearchBar";
 import CartIcon from "../Cart/CartIcon";
-import { auth, currentUser } from "@clerk/nextjs/server";
-import { ClerkLoaded, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
+import {
+  ClerkLoaded,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 import { getAllCategories, getMyOrders } from "@/sanity/helpers/queries";
-import { MY_ORDERS_QUERYResult } from "@/sanity.types";
 import OrdersIcon from "../Order/OrdersIcon";
 import { logoName } from "@/app/constants";
 
 const Header = async () => {
-  const user = await currentUser();
   const { userId } = await auth();
-  let orders: MY_ORDERS_QUERYResult | null = null;
-  if (userId) {
-    orders = await getMyOrders(userId);
-  }
+  // Load orders only if the user is signed in
+  const orders = userId ? await getMyOrders(userId) : null;
+
+  // Fetch categories
   const categories = await getAllCategories(12);
   const headerCategories = categories?.slice(0, 3) || [];
 
@@ -30,20 +34,20 @@ const Header = async () => {
           <Logo>{logoName}</Logo>
         </div>
         <div className="w-auto md:w-1/3 flex items-center justify-end gap-5">
-          <SearchBar />
+          <SearchBar aria-label="Open product search" />
           <CartIcon />
           <ClerkLoaded>
             <SignedIn>
               <OrdersIcon orders={orders} />
               <UserButton />
             </SignedIn>
-            {!user && (
+            <SignedOut>
               <SignInButton mode="modal">
                 <button className="text-sm font-semibold hover:text-darkColor hoverEffect">
                   Login
                 </button>
               </SignInButton>
-            )}
+            </SignedOut>
           </ClerkLoaded>
         </div>
       </Container>

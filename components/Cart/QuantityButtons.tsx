@@ -17,16 +17,17 @@ const QuantityButtons = ({ product, className }: Props) => {
   const handleRemoveProduct = () => {
     removeItem(product._id);
     if (itemCount > 1) {
-      toast.success("Quantity decreased successfully!");
+      toast.success("¡La cantidad disminuyó con éxito!");
     } else {
       toast.success(
-        `${product?.name?.substring(0, 12)}... removed successfully!`
+        `${product?.name?.substring(0, 12)}... fue eliminado con éxito!`
       );
     }
   };
 
   return (
     <div className={cn("flex items-center gap-1 text-base pb-1", className)}>
+      {/* Remove product */}
       <Button
         onClick={handleRemoveProduct}
         disabled={itemCount === 0 || isOutOfStock}
@@ -36,14 +37,18 @@ const QuantityButtons = ({ product, className }: Props) => {
       >
         <Minus />
       </Button>
+
+      {/* Item count */}
       <span className="font-semibold w-8 text-center text-darkColor">
         {itemCount}
       </span>
+
+      {/* Add product */}
       <Button
         onClick={() => {
           addItem(product);
           toast.success(
-            `${product?.name?.substring(0, 12)}... added successfully!`
+            `${product?.name?.substring(0, 12)}... fue añadido con éxito!`
           );
         }}
         variant="outline"

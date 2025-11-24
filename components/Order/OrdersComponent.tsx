@@ -38,7 +38,7 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
 
     if (
       !confirm(
-        "Are you sure you want to delete this order? This action cannot be undone."
+        "¿Seguro que desea eliminar este pedido? Esta acción no se puede deshacer."
       )
     ) {
       return;
@@ -146,7 +146,7 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
                 </TableRow>
               </TooltipTrigger>
               <TooltipContent className="text-white font-medium">
-                <p>Click to see order details</p>
+                <p>Haga clic para ver los detalles del pedido</p>
               </TooltipContent>
             </Tooltip>
           ))}

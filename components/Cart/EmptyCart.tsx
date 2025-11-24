@@ -45,7 +45,7 @@ const EmptyCart = () => {
           href="/"
           className="block bg-darkColor/5 border border-darkColor/20 text-center py-2.5 rounded-full text-sm font-semibold tracking-wide hover:border-darkColor hover:bg-darkColor hover:text-white hoverEffect"
         >
-          Discover Products
+          Descubra nuestros productos
         </Link>
       </motion.div>
     </div>

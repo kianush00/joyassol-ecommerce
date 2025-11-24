@@ -23,7 +23,9 @@ const OrdersPage = async () => {
         {orders?.length ? (
           <Card className="w-full">
             <CardHeader>
-              <CardTitle className="text-2xl md:text-3xl">Order List</CardTitle>
+              <CardTitle className="text-2xl md:text-3xl">
+                Lista de pedidos
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <ScrollArea className="w-full">
@@ -31,21 +33,21 @@ const OrdersPage = async () => {
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-[100px] md:w-auto">
-                        Order Number
+                        Número de pedido
                       </TableHead>
                       <TableHead className="hidden md:table-cell">
-                        Date
+                        Fecha
                       </TableHead>
-                      <TableHead>Customer</TableHead>
+                      <TableHead>Cliente</TableHead>
                       <TableHead className="hidden sm:table-cell">
-                        Email
+                        Correo electrónico
                       </TableHead>
                       <TableHead>Total</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead>Estado</TableHead>
                       <TableHead className="hidden sm:table-cell">
-                        Invoice Number
+                        Número de factura
                       </TableHead>
-                      <TableHead>Action</TableHead>
+                      <TableHead>Acción</TableHead>
                     </TableRow>
                   </TableHeader>
                   <OrdersComponent orders={orders} />
@@ -55,17 +57,18 @@ const OrdersPage = async () => {
             </CardContent>
           </Card>
         ) : (
+          // No orders
           <div className="flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <FileX className="h-24 w-24 text-gray-400 mb-4" />
             <h2 className="text-2xl font-semibold text-gray-900">
-              No orders found
+              No se encontraron pedidos
             </h2>
             <p className="mt-2 text-sm text-gray-600 text-center max-w-md">
-              It looks like you haven&apos;t placed any orders yet. Start
-              shopping to see your orders here!
+              Parece que aún no has realizado ningún pedido. ¡Empieza a comprar
+              para ver tus pedidos aquí!
             </p>
             <Button asChild className="mt-6">
-              <Link href="/">Browse Products</Link>
+              <Link href="/">Explorar productos</Link>
             </Button>
           </div>
         )}

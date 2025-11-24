@@ -4,7 +4,7 @@ import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
 
 const CartIcon = () => {
-  const { items } = useCartStore();
+  const items = useCartStore((s) => s.items);
   return (
     <Link href={"/cart"} className="group relative">
       <ShoppingBag className="w-5 h-5 group-hover:text-darkColor hoverEffect" />

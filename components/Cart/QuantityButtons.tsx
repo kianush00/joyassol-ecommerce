@@ -11,8 +11,9 @@ interface Props {
 }
 
 const QuantityButtons = ({ product, className }: Props) => {
-  const { addItem, removeItem, getItemCount } = useCartStore();
-  const itemCount = getItemCount(product?._id);
+  const addItem = useCartStore((s) => s.addItem);
+  const removeItem = useCartStore((s) => s.removeItem);
+  const itemCount = useCartStore((s) => s.getItemCount(product?._id));
   const isOutOfStock = product?.stock === 0;
   const handleRemoveProduct = () => {
     removeItem(product._id);

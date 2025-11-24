@@ -11,7 +11,7 @@ const SearchInput = ({ search, setSearch }: Props) => {
   return (
     <form className="relative" onSubmit={(e) => e.preventDefault()}>
       <Input
-        placeholder="Search your product here..."
+        placeholder="Busca tu producto aquí..."
         className="flex-1 rounded-md py-5"
         value={search}
         onChange={(e) => setSearch(e.target.value.trimStart())}

@@ -13,11 +13,13 @@ import {
 } from "lucide-react";
 import { notFound } from "next/navigation";
 
-const SingleProductPage = async ({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) => {
+interface Props {
+  params: Promise<{
+    slug: string;
+  }>;
+}
+
+const SingleProductPage = async ({ params }: Props) => {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
   if (!product) return notFound();

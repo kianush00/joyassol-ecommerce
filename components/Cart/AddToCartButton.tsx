@@ -13,8 +13,8 @@ interface Props {
 }
 
 const AddToCartButton = ({ product, className }: Props) => {
-  const { addItem, getItemCount } = useCartStore();
-  const itemCount = getItemCount(product?._id);
+  const addItem = useCartStore((s) => s.addItem);
+  const itemCount = useCartStore((s) => s.getItemCount(product?._id));
   const isOutOfStock = product?.stock === 0;
 
   return (

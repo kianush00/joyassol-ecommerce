@@ -32,12 +32,12 @@ const Footer = () => {
           </div>
 
           {/* Quick links and categories */}
-          <FooterLinkColumn title="Quick Links" links={quickLinksData} />
+          <FooterLinkColumn title="Enlaces rápidos" links={quickLinksData} />
           <FooterLinkColumn title="Categorías" links={categoriesData} />
 
           {/* Newsletter */}
           <div>
-            <h3 className="font-semibold text-darkColor mb-4">Newsletter</h3>
+            <h3 className="font-semibold text-darkColor mb-4">Boletín</h3>
             <p className="text-gray-600 text-sm mb-4">
               Suscríbase a nuestro boletín para recibir actualizaciones y
               ofertas exclusivas.
@@ -45,7 +45,7 @@ const Footer = () => {
             <form className="space-y-3">
               <Input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Ingrese su correo electrónico"
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
               />
@@ -53,7 +53,7 @@ const Footer = () => {
                 type="submit"
                 className="w-full bg-darkColor text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
               >
-                Subscribe
+                Suscribirse
               </button>
             </form>
           </div>

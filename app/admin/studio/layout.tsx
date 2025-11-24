@@ -1,6 +1,6 @@
+import { logoName } from "@/app/constants";
 import { Metadata } from "next";
 import React from "react";
-import { logoName } from "../constants";
 
 export const metadata: Metadata = {
   title: `${logoName} Ecommerce app for shoppers`,

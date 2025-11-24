@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 import { logoName } from "../constants";
 import Header from "@/components/Header/Header";
+import { esMX } from "@clerk/localizations";
 
 const raleway = localFont({
   src: "../fonts/Raleway.woff2",
@@ -24,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={esMX}>
       <html lang="es">
         <body className={`${raleway.variable} antialiased`}>
           <Header />

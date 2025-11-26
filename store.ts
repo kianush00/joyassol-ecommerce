@@ -16,6 +16,7 @@ interface CartState {
   getTotalPrice: () => number;
   getSubtotalPrice: () => number;
   getItemCount: (productId: string) => number;
+  getTotalItems: () => number;
   getGroupedItems: () => CartItem[];
 }
 
@@ -88,6 +89,8 @@ const useCartStore = create<CartState>()(
         const item = get().items.find((item) => item.product._id === productId);
         return item ? item.quantity : 0;
       },
+      // Returns the total number of items in the cart
+      getTotalItems: () => get().items.length,
       // Returns the current array of items
       getGroupedItems: () => get().items,
     }),

@@ -7,14 +7,15 @@ import ProductsLoadingState from "./ProductsLoadingState";
 import { useFilteredProducts } from "@/hooks/useFilteredProducts";
 import { useState } from "react";
 import ProductsErrorState from "./ProductsErrorState";
+import { defineQuery } from "next-sanity";
 
 const MAX_RESULTS = 50;
 
 const HomeProducts = () => {
   const [selectedTab, setSelectedTab] = useState(productType[0]?.title || "");
 
-  const query = `*[_type == "product" && variant == $variant
-          ][0...${MAX_RESULTS}] | order(name asc)`;
+  const query = defineQuery(`*[_type == "product" && variant == $variant
+          ][0...${MAX_RESULTS}] | order(name asc)`);
 
   const { products, loading, error } = useFilteredProducts({
     query,

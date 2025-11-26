@@ -14,21 +14,24 @@ import CartContent from "@/components/Cart/CartContent";
 import NoAccessToCart from "@/components/Cart/NoAccessToCart";
 
 const CartPage = () => {
+  const [mounted, setMounted] = useState(false);
+
+  // Mounted flag to prevent hydration errors
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const deleteCartProduct = useCartStore((s) => s.deleteCartProduct);
   const resetCart = useCartStore((s) => s.resetCart);
   const getItemCount = useCartStore((s) => s.getItemCount);
   const getTotalPrice = useCartStore((s) => s.getTotalPrice);
   const getSubtotalPrice = useCartStore((s) => s.getSubtotalPrice);
   const groupedItems = useCartStore((s) => s.getGroupedItems());
-  const [isClient, setIsClient] = useState(false);
   const [loading, setLoading] = useState(false);
   const { isSignedIn } = useAuth();
   const { user } = useUser();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-  if (!isClient) {
+  if (!mounted) {
     return <Loading />;
   }
 

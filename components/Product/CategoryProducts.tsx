@@ -6,7 +6,7 @@ import ProductsLoadingState from "./ProductsLoadingState";
 import ProductsErrorState from "./ProductsErrorState";
 import CategoriesSidebar from "./CategoriesSidebar";
 import { useFilteredProducts } from "@/hooks/useFilteredProducts";
-import { QueryParams } from "next-sanity";
+import { defineQuery, QueryParams } from "next-sanity";
 
 interface Props {
   categories: CATEGORIES_QUERYResult;
@@ -16,10 +16,10 @@ interface Props {
 const MAX_RESULTS = 50;
 
 const CategoryProducts = ({ categories, slug }: Props) => {
-  const query = `*[
+  const query = defineQuery(`*[
         _type == "product" &&
         references(*[_type == "category" && slug.current == $categorySlug]._id)
-        ][0...${MAX_RESULTS}] | order(name asc)`;
+        ][0...${MAX_RESULTS}] | order(name asc)`);
 
   const params: QueryParams = { categorySlug: slug };
 

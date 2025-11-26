@@ -30,6 +30,7 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
     // This will trigger a refresh of the page data
     router.refresh();
   }, [router]);
+
   const handleDeleteOrder = async (
     orderId: string,
     event: React.MouseEvent
@@ -61,8 +62,7 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
       }
 
       // Update the local state to remove the deleted order
-
-      toast.success("Order deleted successfully");
+      toast.success("Pedido eliminado con éxito");
 
       // Refresh the page data to get the updated orders list
       refreshOrders();
@@ -71,7 +71,7 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Failed to delete order. Please try again."
+          : "No se pudo eliminar el pedido. Inténtelo de nuevo."
       );
     } finally {
       setIsDeleting(null);

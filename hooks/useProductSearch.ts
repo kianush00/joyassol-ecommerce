@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/sanity.types";
 import { searchTextIsTooLong } from "@/app/constants";
+import { defineQuery } from "next-sanity";
 
 const MAX_RESULTS = 50;
 
@@ -14,13 +15,14 @@ export function useProductSearch(debounceDelay: number = 300) {
   // Fetch products from Sanity based on search input
   const fetchProducts = useCallback(async () => {
     try {
-      const query = `*[
+      const query = defineQuery(`*[
         _type == "product" &&
         (
           name match $search ||
           intro match $search
         )
-      ][0...${MAX_RESULTS}] | order(name asc)`;
+      ][0...${MAX_RESULTS}] | order(name asc)`);
+
       const params = { search: `*${search}*` };
       const response = await client.fetch<Product[]>(query, params);
       setProducts(response);

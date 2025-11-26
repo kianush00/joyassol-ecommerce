@@ -1,18 +1,9 @@
 import type { Metadata } from "next";
-import "../globals.css";
 import Footer from "@/components/Footer/Footer";
-import { ClerkProvider } from "@clerk/nextjs";
-import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 import { logoName } from "../constants";
 import Header from "@/components/Header/Header";
-import { esMX } from "@clerk/localizations";
-
-const raleway = localFont({
-  src: "../fonts/Raleway.woff2",
-  variable: "--font-raleway",
-  weight: "100 900",
-});
+import { SanityLive } from "@/sanity/lib/live";
 
 export const metadata: Metadata = {
   title: `${logoName} Ecommerce app for shoppers`,
@@ -25,23 +16,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider localization={esMX}>
-      <html lang="es">
-        <body className={`${raleway.variable} antialiased`}>
-          <Header />
-          {children}
-          <Footer />
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: "#000000",
-                color: "#ffffff",
-              },
-            }}
-          />
-        </body>
-      </html>
-    </ClerkProvider>
+    <div>
+      <Header />
+      {children}
+      <Footer />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            background: "#000000",
+            color: "#ffffff",
+          },
+        }}
+      />
+      <SanityLive />
+    </div>
   );
 }

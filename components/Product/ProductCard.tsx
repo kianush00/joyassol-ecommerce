@@ -11,38 +11,46 @@ interface Props {
 }
 
 const ProductCard = ({ product }: Props) => {
+  const isOutOfStock = !product.stock;
+
   return (
     <div className="group text-sm rounded-lg overflow-hidden">
+      {/* PRODUCT IMAGE */}
       <div className="bg-linear-to-r from-zinc-200 via-zinc-300 to-zinc-200 overflow-hidden relative">
-        {product?.images && (
+        {/* Product image */}
+        {product.images && (
           <Link href={getProductUrl(product.slug?.current)}>
             <Image
-              src={urlFor(product?.images[0]).url()}
+              src={urlFor(product.images[0]).url()}
               width={500}
               height={500}
               alt="productImage"
               priority
               className={`w-full h-72 object-contain overflow-hidden hoverEffect ${
-                product?.stock !== 0 && "group-hover:scale-105"
+                !isOutOfStock && "group-hover:scale-105"
               }`}
             />
           </Link>
         )}
-        {product?.stock === 0 && (
+
+        {/* Out of stock */}
+        {isOutOfStock && (
           <div className="absolute top-0 left-0 w-full h-full bg-darkColor/50 flex items-center justify-center">
             <p className="text-lg text-white font-semibold text-center">
-              Out of stock
+              Agotado
             </p>
           </div>
         )}
       </div>
+
+      {/* PRODUCT INFO */}
       <div className="py-3 px-2 flex flex-col gap-1.5 bg-zinc-50 border border-t-0 rounded-lg rounded-tl-none rounded-tr-none">
-        <h2 className="font-semibold line-clamp-1">{product?.name}</h2>
-        <p>{product?.intro}</p>
+        <h2 className="font-semibold line-clamp-1">{product.name}</h2>
+        <p>{product.intro}</p>
         <PriceView
           className="text-lg"
-          price={product?.price}
-          discount={product?.discount}
+          price={product.price}
+          discount={product.discount}
         />
         <AddToCartButton product={product} />
       </div>

@@ -2,15 +2,11 @@
 import { ShoppingBag } from "lucide-react";
 import CartProductsList from "./CartProductsList";
 import { Button } from "../ui/button";
-import useCartStore, { CartItem } from "@/store";
+import useCartStore from "@/store";
 import toast from "react-hot-toast";
 import CartOrderSummary from "./CartOrderSummary";
 
-interface Props {
-  cartProducts: CartItem[];
-}
-
-export default function CartContent({ cartProducts }: Readonly<Props>) {
+export default function CartContent() {
   const resetCart = useCartStore((s) => s.resetCart);
 
   const handleResetCart = () => {
@@ -36,7 +32,7 @@ export default function CartContent({ cartProducts }: Readonly<Props>) {
         {/* Products list */}
         <div className="lg:col-span-2 rounded-lg">
           <div className="border bg-white rounded-md">
-            <CartProductsList cartProducts={cartProducts} />
+            <CartProductsList />
 
             <Button
               onClick={handleResetCart}
@@ -51,14 +47,14 @@ export default function CartContent({ cartProducts }: Readonly<Props>) {
         {/* Order summary for desktop */}
         <div className="lg:col-span-1">
           <div className="hidden md:inline-block w-full bg-white p-6 rounded-lg border">
-            <CartOrderSummary cartProducts={cartProducts} />
+            <CartOrderSummary />
           </div>
         </div>
 
         {/* Order summary for mobile */}
         <div className="md:hidden fixed bottom-0 left-0 w-full bg-white pt-2">
           <div className="p-4 rounded-lg border mx-4">
-            <CartOrderSummary cartProducts={cartProducts} />
+            <CartOrderSummary />
           </div>
         </div>
       </div>

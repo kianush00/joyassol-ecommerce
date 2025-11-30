@@ -14,11 +14,7 @@ const CartPage = () => {
     <div className="bg-gray-50 pb-52 md:pb-10">
       {isSignedIn ? (
         <Container>
-          {groupedItems.length ? (
-            <CartContent cartProducts={groupedItems} />
-          ) : (
-            <EmptyCart />
-          )}
+          {groupedItems.length ? <CartContent /> : <EmptyCart />}
         </Container>
       ) : (
         <NoAccessToCart />

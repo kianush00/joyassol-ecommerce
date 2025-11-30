@@ -42,7 +42,10 @@ const OrderDetailsDialog = ({
           </p>
           <p>
             <strong>Fecha:</strong>{" "}
-            {order.orderDate && new Date(order.orderDate).toLocaleDateString()}
+            <time dateTime={order.orderDate} suppressHydrationWarning>
+              {order.orderDate &&
+                new Date(order.orderDate).toLocaleDateString()}
+            </time>
           </p>
           <p>
             <strong>Estado:</strong>{" "}

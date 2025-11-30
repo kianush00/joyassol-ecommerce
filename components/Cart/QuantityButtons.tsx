@@ -2,7 +2,7 @@
 import { Product } from "@/sanity.types";
 import { Button } from "../ui/button";
 import { Minus, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, truncateName } from "@/lib/utils";
 import useCartStore from "@/store";
 import toast from "react-hot-toast";
 import { useZustandSnapshot } from "@/hooks/useZustandSnapshot";
@@ -19,19 +19,13 @@ const QuantityButtons = ({ product, className }: Props) => {
   const isOutOfStock = !product.stock;
   const productName = product.name || "Producto";
 
-  const truncateName = (name: string, maxLength: number = 12) => {
-    return name.length > maxLength
-      ? `${name.substring(0, maxLength)}...`
-      : name;
-  };
-
   const handleRemoveProduct = () => {
     if (itemCount === 0) return; // Prevent negative itemCount
     removeItem(product._id);
     if (itemCount > 1) {
       toast.success("Cantidad reducida correctamente");
     } else {
-      toast.success(`${truncateName(productName, 12)} eliminado del carrito`, {
+      toast.success(`${truncateName(productName, 20)} eliminado del carrito`, {
         icon: "🗑️",
       });
     }
@@ -41,7 +35,7 @@ const QuantityButtons = ({ product, className }: Props) => {
     if (isOutOfStock) return; // Prevent adding out of stock products
 
     addItem(product);
-    toast.success(`${truncateName(productName, 12)} agregado`);
+    toast.success(`${truncateName(productName, 20)} agregado`);
   };
 
   if (!product._id) {

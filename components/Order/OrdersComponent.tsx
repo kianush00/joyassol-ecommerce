@@ -93,8 +93,11 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
                     {order.orderNumber?.slice(-10) ?? "N/A"}...
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {order?.orderDate &&
-                      format(new Date(order.orderDate), "dd/MM/yyyy")}
+                    {order?.orderDate && (
+                      <time dateTime={order.orderDate} suppressHydrationWarning>
+                        {format(new Date(order.orderDate), "dd/MM/yyyy")}
+                      </time>
+                    )}
                   </TableCell>
                   <TableCell>{order.customerName}</TableCell>
                   <TableCell className="hidden sm:table-cell">

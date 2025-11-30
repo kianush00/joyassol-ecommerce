@@ -1,14 +1,12 @@
 "use client";
-import useCartStore, { CartItem } from "@/store";
+import useCartStore from "@/store";
 import toast from "react-hot-toast";
 import CartProductItem from "./CartProductItem";
+import { useZustandSnapshot } from "@/hooks/useZustandSnapshot";
 
-interface Props {
-  cartProducts: CartItem[];
-}
-
-const CartProductsList = ({ cartProducts }: Readonly<Props>) => {
+const CartProductsList = () => {
   const deleteCartProduct = useCartStore((s) => s.deleteCartProduct);
+  const cartProducts = useZustandSnapshot((s) => s.getGroupedItems(), []);
 
   const handleDeleteProduct = (id: string) => {
     deleteCartProduct(id);

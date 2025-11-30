@@ -6,6 +6,7 @@ import { Input } from "../ui/input";
 import { categoriesData, quickLinksData } from "@/app/constants";
 import { logoName } from "../../app/constants/index";
 import FooterLinkColumn from "./FooterLinkColumn";
+import { CopyrightYear } from "./CopyrightYear";
 
 const Footer = () => {
   return (
@@ -62,8 +63,7 @@ const Footer = () => {
         {/* Bottom copyright section */}
         <div className="py-6 border-t text-center text-sm text-gray-600">
           <p>
-            © {new Date().getFullYear()} Joyas Sol. Todos los derechos
-            reservados.
+            © <CopyrightYear /> Joyas Sol. Todos los derechos reservados.
           </p>
         </div>
       </Container>

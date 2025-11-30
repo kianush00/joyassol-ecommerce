@@ -5,6 +5,7 @@ import { Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useCartStore from "@/store";
 import toast from "react-hot-toast";
+import { useZustandSnapshot } from "@/hooks/useZustandSnapshot";
 
 interface Props {
   product: Product;
@@ -14,18 +15,39 @@ interface Props {
 const QuantityButtons = ({ product, className }: Props) => {
   const addItem = useCartStore((s) => s.addItem);
   const removeItem = useCartStore((s) => s.removeItem);
-  const itemCount = useCartStore((s) => s.getItemCount(product?._id));
-  const isOutOfStock = product?.stock === 0;
+  const itemCount = useZustandSnapshot((s) => s.getItemCount(product._id), 0);
+  const isOutOfStock = !product.stock;
+  const productName = product.name || "Producto";
+
+  const truncateName = (name: string, maxLength: number = 12) => {
+    return name.length > maxLength
+      ? `${name.substring(0, maxLength)}...`
+      : name;
+  };
+
   const handleRemoveProduct = () => {
+    if (itemCount === 0) return; // Prevent negative itemCount
     removeItem(product._id);
     if (itemCount > 1) {
-      toast.success("¡La cantidad disminuyó con éxito!");
+      toast.success("Cantidad reducida correctamente");
     } else {
-      toast.success(
-        `${product?.name?.substring(0, 12)}... fue eliminado con éxito!`
-      );
+      toast.success(`${truncateName(productName, 12)} eliminado del carrito`, {
+        icon: "🗑️",
+      });
     }
   };
+
+  const handleAddProduct = () => {
+    if (isOutOfStock) return; // Prevent adding out of stock products
+
+    addItem(product);
+    toast.success(`${truncateName(productName, 12)} agregado`);
+  };
+
+  if (!product._id) {
+    console.error("QuantityButtons: product._id is required");
+    return null;
+  }
 
   return (
     <div className={cn("flex items-center gap-1 text-base pb-1", className)}>
@@ -35,30 +57,37 @@ const QuantityButtons = ({ product, className }: Props) => {
         disabled={itemCount === 0 || isOutOfStock}
         variant="outline"
         size="icon"
-        className="w-6 h-6"
+        className="w-6 h-6 disabled:cursor-not-allowed"
+        aria-label="Disminuir cantidad"
+        type="button"
       >
-        <Minus />
+        <Minus className="w-4 h-4" />
       </Button>
 
       {/* Item count */}
-      <span className="font-semibold w-8 text-center text-darkColor">
+      <span
+        className="font-semibold w-8 text-center text-darkColor"
+        aria-label={`Cantidad: ${itemCount}`}
+      >
         {itemCount}
       </span>
 
       {/* Add product */}
       <Button
-        onClick={() => {
-          addItem(product);
-          toast.success(
-            `${product?.name?.substring(0, 12)}... fue añadido con éxito!`
-          );
-        }}
+        onClick={handleAddProduct}
         variant="outline"
         size="icon"
-        className="w-6 h-6"
+        className="w-6 h-6 disabled:cursor-not-allowed"
+        disabled={isOutOfStock}
+        aria-label="Aumentar cantidad"
+        type="button"
       >
-        <Plus />
+        <Plus className="w-4 h-4" />
       </Button>
+
+      {isOutOfStock && (
+        <span className="text-xs text-red-500 ml-2">Sin stock</span>
+      )}
     </div>
   );
 };

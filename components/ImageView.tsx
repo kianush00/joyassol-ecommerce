@@ -9,32 +9,40 @@ import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 
+export type SanityImage = {
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  _type: "image";
+  _key: string;
+};
+
 interface Props {
-  images: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-    _key: string;
-  }>;
+  images: SanityImage[];
 }
 
-const ImageView = ({ images = [] }: Props) => {
-  const [active, setActive] = useState(images[0] ?? null);
-  const mainUrl = useMemo(() => urlFor(active).url(), [active]);
+const ImageView = ({ images }: Props) => {
+  const firstImage = images?.[0] ?? null;
+  const [active, setActive] = useState<SanityImage | null>(firstImage);
+
+  const mainUrl = useMemo(() => {
+    if (!active) return "";
+    return urlFor(active).url();
+  }, [active]);
+
   const thumbUrls = useMemo(
-    () => images.map((img) => urlFor(img).url()),
+    () => images?.map((img) => urlFor(img).url()) ?? [],
     [images]
   );
 
   // Fallback if no images
-  if (!images.length) {
+  if (!images?.length) {
     return (
       <div className="w-full md:w-1/2 flex items-center justify-center border rounded-md text-lightColor">
         No hay imágenes disponibles
@@ -46,28 +54,31 @@ const ImageView = ({ images = [] }: Props) => {
     <div className="w-full md:w-1/2 space-y-2 md:space-y-4">
       <AnimatePresence mode="wait">
         <motion.div
-          key={active?._key}
+          key={active?._key ?? "default"}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.1 }}
           className="w-full max-h-[550px] min-h-[450px] border rounded-md group overflow-hidden"
         >
-          <Image
-            src={mainUrl}
-            width={700}
-            height={700}
-            alt={`Image ${active?._key}`}
-            priority
-            className="w-full h-96 max-h-[550px] min-h-[500px] object-contain group-hover:scale-110 hoverEffect rounded-md"
-          />
+          {mainUrl && (
+            <Image
+              src={mainUrl}
+              width={700}
+              height={700}
+              alt={`Image ${active?._key ?? "product"}`}
+              priority
+              className="w-full h-96 max-h-[550px] min-h-[500px] object-contain group-hover:scale-110 hoverEffect rounded-md"
+            />
+          )}
         </motion.div>
       </AnimatePresence>
       <div className="grid grid-cols-6 gap-2 h-20 md:h-28">
-        {images?.map((image, index) => (
+        {images.map((image, index) => (
           <button
             key={image._key}
             onMouseEnter={() => setActive(image)}
+            onClick={() => setActive(image)}
             className={`border rounded-md overflow-hidden ${
               active?._key === image._key ? "ring-1 ring-darkColor" : ""
             }`}

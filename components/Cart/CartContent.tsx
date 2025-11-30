@@ -1,37 +1,34 @@
 "use client";
 import { ShoppingBag } from "lucide-react";
 import CartProductsList from "./CartProductsList";
-import OrderSummary from "../Order/OrderSummary";
 import { Button } from "../ui/button";
-import { CartItem } from "@/store";
+import useCartStore, { CartItem } from "@/store";
+import toast from "react-hot-toast";
+import CartOrderSummary from "./CartOrderSummary";
 
 interface Props {
   cartProducts: CartItem[];
-  loading: boolean;
-  getItemCount: (productId: string) => number;
-  getSubtotalPrice: () => number;
-  getTotalPrice: () => number;
-  handleDeleteProduct: (productId: string) => void;
-  handleResetCart: () => void;
-  handleCheckout: () => void;
 }
 
-export default function CartContent({
-  cartProducts,
-  loading,
-  getItemCount,
-  getSubtotalPrice,
-  getTotalPrice,
-  handleDeleteProduct,
-  handleResetCart,
-  handleCheckout,
-}: Readonly<Props>) {
+export default function CartContent({ cartProducts }: Readonly<Props>) {
+  const resetCart = useCartStore((s) => s.resetCart);
+
+  const handleResetCart = () => {
+    const confirmed = globalThis.confirm(
+      "¿Estás segur@ de que quieres restablecer el carrito?"
+    );
+    if (confirmed) {
+      resetCart();
+      toast.success("Carrito reiniciado correctamente", { icon: "🗑️" });
+    }
+  };
+
   return (
     <>
       {/* Cart header */}
       <div className="flex items-center gap-2 py-5">
         <ShoppingBag />
-        <h1 className="text-2xl font-semibold">Shopping Cart</h1>
+        <h1 className="text-2xl font-semibold">Tu Carrito</h1>
       </div>
 
       {/* Cart grid */}
@@ -39,18 +36,14 @@ export default function CartContent({
         {/* Products list */}
         <div className="lg:col-span-2 rounded-lg">
           <div className="border bg-white rounded-md">
-            <CartProductsList
-              cartProducts={cartProducts}
-              getItemCount={getItemCount}
-              handleDeleteProduct={handleDeleteProduct}
-            />
+            <CartProductsList cartProducts={cartProducts} />
 
             <Button
               onClick={handleResetCart}
               className="m-5 font-semibold"
               variant="destructive"
             >
-              Reset Cart
+              Reiniciar carrito
             </Button>
           </div>
         </div>
@@ -58,24 +51,14 @@ export default function CartContent({
         {/* Order summary for desktop */}
         <div className="lg:col-span-1">
           <div className="hidden md:inline-block w-full bg-white p-6 rounded-lg border">
-            <OrderSummary
-              isLoading={loading}
-              getSubtotalPrice={getSubtotalPrice}
-              getTotalPrice={getTotalPrice}
-              handleCheckout={handleCheckout}
-            />
+            <CartOrderSummary cartProducts={cartProducts} />
           </div>
         </div>
 
         {/* Order summary for mobile */}
         <div className="md:hidden fixed bottom-0 left-0 w-full bg-white pt-2">
           <div className="p-4 rounded-lg border mx-4">
-            <OrderSummary
-              isLoading={loading}
-              getSubtotalPrice={getSubtotalPrice}
-              getTotalPrice={getTotalPrice}
-              handleCheckout={handleCheckout}
-            />
+            <CartOrderSummary cartProducts={cartProducts} />
           </div>
         </div>
       </div>

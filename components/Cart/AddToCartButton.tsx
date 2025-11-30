@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import QuantityButtons from "./QuantityButtons";
 import PriceFormatter from "../Price/PriceFormatter";
 import useCartStore from "@/store";
-import { useEffect, useState } from "react";
+import { useZustandSnapshot } from "@/hooks/useZustandSnapshot";
 
 interface Props {
   product: Product;
@@ -14,23 +14,9 @@ interface Props {
 }
 
 const AddToCartButton = ({ product, className }: Props) => {
-  const [mounted, setMounted] = useState(false);
-
-  // Use useEffect to set mounted to true after component mounts
-  // This ensures that the component only renders on the client-side
-  // Preventing hydration errors due to server/client mismatch
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
-
   const addItem = useCartStore((s) => s.addItem);
-  const itemCount = useCartStore((s) => s.getItemCount(product?._id));
+  const itemCount = useZustandSnapshot((s) => s.getItemCount(product?._id), 0);
   const isOutOfStock = product?.stock === 0;
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <div className="w-full h-12 flex items-center">

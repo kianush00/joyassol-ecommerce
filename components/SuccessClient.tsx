@@ -1,10 +1,9 @@
 "use client";
 import useCartStore from "@/store";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { Check, Home, Package, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import Loading from "./Loading";
 
 interface Props {
   orderNumber: string;
@@ -12,23 +11,15 @@ interface Props {
 }
 
 const SuccessClient = ({ orderNumber, sessionId }: Props) => {
-  const [mounted, setMounted] = useState(false);
   const resetCart = useCartStore((s) => s.resetCart);
   const calledRef = useRef(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true); // Mounted flag to prevent hydration errors
-
     if (!calledRef.current) {
       resetCart(); // only call resetCart once
       calledRef.current = true;
     }
   }, [orderNumber, sessionId, resetCart]);
-
-  if (!mounted) {
-    return <Loading />;
-  }
 
   return (
     <div className="py-10 bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
@@ -38,9 +29,16 @@ const SuccessClient = ({ orderNumber, sessionId }: Props) => {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="bg-white rounded-2xl shadow-2xl px-8 py-12 max-w-xl w-full text-center"
       >
-        <motion.div className="w-24 h-24 bg-black rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          className="w-24 h-24 bg-black rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg"
+        >
           <Check className="text-white w-12 h-12" />
         </motion.div>
+
+        {/* Success message */}
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
           ¡Pedido confirmado!
         </h1>
@@ -56,6 +54,7 @@ const SuccessClient = ({ orderNumber, sessionId }: Props) => {
           </p>
         </div>
 
+        {/* Next steps */}
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-8">
           <h2 className="font-semibold text-gray-900 mb-2">¿Qué sigue?</h2>
           <ul className="text-gray-700 text-sm space-y-1">

@@ -25,24 +25,24 @@ const SingleProductPage = async ({ params }: Props) => {
   return (
     <Container className="py-10 flex flex-col md:flex-row gap-10">
       {/* PRODUCT IMAGE */}
-      <ImageView images={product?.images ?? []} />
+      <ImageView images={product.images ?? []} />
 
       {/* PRODUCT INFO */}
       <div className="w-full md:w-1/2 flex flex-col gap-5">
         {/* Product name and price */}
         <div>
           <h2 className="text-3xl md:text-4xl font-bold mb-2">
-            {product?.name}
+            {product.name}
           </h2>
           <PriceView
-            price={product?.price}
-            discount={product?.discount}
+            price={product.price}
+            discount={product.discount}
             className="text-lg font-bold"
           />
         </div>
 
         {/* Stock status */}
-        {product?.stock ? (
+        {product.stock ? (
           <p className="bg-green-100 w-24 text-center text-green-600 text-sm py-2.5 font-semibold rounded-lg">
             En Stock
           </p>
@@ -54,7 +54,7 @@ const SingleProductPage = async ({ params }: Props) => {
 
         {/* Product description */}
         <p className="text-sm text-gray-600 tracking-wide">
-          {product?.description}
+          {product.description}
         </p>
 
         {/* Cart and wishlist buttons */}

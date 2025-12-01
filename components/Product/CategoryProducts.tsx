@@ -6,7 +6,8 @@ import ProductsLoadingState from "./ProductsLoadingState";
 import ProductsErrorState from "./ProductsErrorState";
 import CategoriesSidebar from "./CategoriesSidebar";
 import { useFilteredProducts } from "@/hooks/useFilteredProducts";
-import { defineQuery, QueryParams } from "next-sanity";
+import { QueryParams } from "next-sanity";
+import { useMemo } from "react";
 
 interface Props {
   categories: CATEGORIES_QUERYResult;
@@ -14,18 +15,20 @@ interface Props {
 }
 
 const MAX_RESULTS = 50;
-
-const CategoryProducts = ({ categories, slug }: Props) => {
-  const query = defineQuery(`*[
+const PRODUCTS_BY_CATEGORY_QUERY = `*[
         _type == "product" &&
         references(*[_type == "category" && slug.current == $categorySlug]._id)
-        ][0...${MAX_RESULTS}] | order(name asc)`);
+        ][0...${MAX_RESULTS}] | order(name asc)`;
 
-  const params: QueryParams = { categorySlug: slug };
+const CategoryProducts = ({ categories, slug }: Props) => {
+  const queryParams = useMemo<QueryParams>(
+    () => ({ categorySlug: slug }),
+    [slug]
+  );
 
-  const { products, loading, error, fetchProducts } = useFilteredProducts({
-    query,
-    params,
+  const { products, loading, error, refetch } = useFilteredProducts({
+    query: PRODUCTS_BY_CATEGORY_QUERY,
+    params: queryParams,
   });
 
   return (
@@ -37,11 +40,7 @@ const CategoryProducts = ({ categories, slug }: Props) => {
         {loading && <ProductsLoadingState />}
 
         {!loading && error && (
-          <ProductsErrorState
-            error={error}
-            fetchProducts={fetchProducts}
-            params={params}
-          />
+          <ProductsErrorState error={error} onRetry={refetch} />
         )}
 
         {!loading &&

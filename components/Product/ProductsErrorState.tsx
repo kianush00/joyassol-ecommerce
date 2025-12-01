@@ -1,29 +1,37 @@
 "use client";
-import { QueryParams } from "next-sanity";
+import { AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "../ui/button";
 
 interface Props {
   error: string | null;
-  fetchProducts?: (
-    overrides?:
-      | {
-          params?: QueryParams;
-          signal?: AbortSignal;
-        }
-      | undefined
-  ) => Promise<void>;
-  params?: QueryParams;
+  onRetry?: () => void;
 }
 
-const ProductsErrorState = ({ error, fetchProducts, params }: Props) => {
+const ProductsErrorState = ({ error, onRetry }: Props) => {
   return (
-    <div className="flex flex-col items-center justify-center py-10 min-h-80 space-y-4 text-center bg-gray-100 rounded-lg w-full mt-10">
-      <span className="text-red-600 text-lg font-semibold">{error}</span>
-      {fetchProducts && params && (
-        <Button onClick={() => fetchProducts({ params: params })}>
-          Reintentar
-        </Button>
-      )}
+    <div className="flex flex-col items-center justify-center py-16 px-4">
+      <div className="text-center max-w-md">
+        {/* Error icon */}
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center">
+          <AlertCircle className="w-8 h-8 text-red-600" />
+        </div>
+
+        {/* Error message */}
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          Error al cargar productos
+        </h3>
+        <p className="text-gray-600 mb-6">
+          {error || "Ha ocurrido un error inesperado"}
+        </p>
+
+        {/* Retry button */}
+        {onRetry && (
+          <Button onClick={onRetry} variant="outline" className="gap-2">
+            <RefreshCw className="w-4 h-4" />
+            Reintentar
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

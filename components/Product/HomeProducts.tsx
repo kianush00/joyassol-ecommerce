@@ -5,21 +5,25 @@ import NoProductsAvailable from "./NoProductsAvailable";
 import ProductGrid from "./ProductGrid";
 import ProductsLoadingState from "./ProductsLoadingState";
 import { useFilteredProducts } from "@/hooks/useFilteredProducts";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ProductsErrorState from "./ProductsErrorState";
-import { defineQuery } from "next-sanity";
+import { QueryParams } from "next-sanity";
 
 const MAX_RESULTS = 50;
+const PRODUCTS_QUERY = `*[
+          _type == "product" && variant == $variant
+          ][0...${MAX_RESULTS}] | order(name asc)`;
 
 const HomeProducts = () => {
   const [selectedTab, setSelectedTab] = useState(productType[0]?.title || "");
+  const queryParams = useMemo<QueryParams>(
+    () => ({ variant: selectedTab.toLowerCase() }),
+    [selectedTab]
+  );
 
-  const query = defineQuery(`*[_type == "product" && variant == $variant
-          ][0...${MAX_RESULTS}] | order(name asc)`);
-
-  const { products, loading, error } = useFilteredProducts({
-    query,
-    params: { variant: selectedTab.toLowerCase() },
+  const { products, loading, error, refetch } = useFilteredProducts({
+    query: PRODUCTS_QUERY,
+    params: queryParams,
   });
 
   return (
@@ -27,7 +31,9 @@ const HomeProducts = () => {
       <HomeTabbar selectedTab={selectedTab} onTabSelect={setSelectedTab} />
 
       {loading && <ProductsLoadingState />}
-      {!loading && error && <ProductsErrorState error={error} />}
+      {!loading && error && (
+        <ProductsErrorState error={error} onRetry={refetch} />
+      )}
 
       {!loading &&
         !error &&

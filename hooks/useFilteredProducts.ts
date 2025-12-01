@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/sanity.types";
 import { QueryParams } from "next-sanity";
@@ -11,47 +11,41 @@ interface Props {
 
 export function useFilteredProducts({ query, params = {} }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
 
-  const fetchProducts = useCallback(
-    async (overrides?: { params?: QueryParams; signal?: AbortSignal }) => {
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchData = async () => {
       setError(null);
       setLoading(true);
-      const finalParams = overrides?.params ?? params;
-      const signal = overrides?.signal;
 
       try {
-        const response = await client.fetch<Product[]>(query, finalParams, {
-          signal,
+        const response = await client.fetch<Product[]>(query, params, {
+          signal: controller.signal,
         });
         setProducts(response ?? []);
       } catch (err: unknown) {
-        // Memorized fetch: avoids re-declarations and facilitates cancellation
-        if ((err as Error)?.name === "AbortError") {
-          return; // Request cancelled
-        }
+        if ((err as Error)?.name === "AbortError") return;
+
         console.error("Error fetching products:", err);
         setError("Error al cargar los productos. Inténtelo de nuevo.");
         setProducts([]);
       } finally {
         setLoading(false);
       }
-    },
-    [query, params]
-  );
+    };
 
-  // Effect that triggers the search and uses AbortController to prevent race conditions
-  useEffect(() => {
-    const controller = new AbortController();
-    fetchProducts({ signal: controller.signal });
+    fetchData();
+
     return () => controller.abort();
-  }, [fetchProducts]);
+  }, [query, params, refetchTrigger]);
 
-  return {
-    products,
-    loading,
-    error,
-    fetchProducts,
-  };
+  const refetch = useCallback(() => {
+    setRefetchTrigger((prev) => prev + 1);
+  }, []);
+
+  return { products, loading, error, refetch };
 }

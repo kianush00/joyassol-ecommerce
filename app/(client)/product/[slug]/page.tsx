@@ -1,6 +1,5 @@
 import AddToCartButton from "@/components/Cart/AddToCartButton";
 import Container from "@/components/Container";
-import ImageView from "@/components/ImageView";
 import PriceView from "@/components/Price/PriceView";
 import ProductCharacteristics from "@/components/Product/ProductCharacteristics";
 import { getProductBySlug } from "@/sanity/helpers/queries";
@@ -10,6 +9,7 @@ import { RxBorderSplit } from "react-icons/rx";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FiShare2 } from "react-icons/fi";
+import ImageView from "@/components/Image/ImageView";
 
 interface Props {
   params: Promise<{

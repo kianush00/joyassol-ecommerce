@@ -13,6 +13,7 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import NoImageFallback from "../Image/NoImageFallback";
 
 interface OrderDetailsDialogProps {
   order: MY_ORDERS_QUERYResult[number] | null;
@@ -78,14 +79,17 @@ const OrderDetailsDialog = ({
             {order.products?.map((product) => (
               <TableRow key={product?._key}>
                 <TableCell className="flex items-center gap-2">
-                  {product?.product?.images && (
+                  {product?.product?.images &&
+                  product?.product?.images.length > 0 ? (
                     <Image
                       src={urlFor(product?.product?.images[0]).url()}
-                      alt="productImage"
+                      alt={product?.product?.name || "Producto sin nombre"}
                       width={50}
                       height={50}
                       className="border rounded-sm w-14 h-14 object-contain"
                     />
+                  ) : (
+                    <NoImageFallback className="border rounded-sm w-14 h-14" />
                   )}
 
                   {product?.product && (

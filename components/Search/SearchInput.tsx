@@ -1,38 +1,88 @@
 "use client";
-import { Search, X } from "lucide-react";
+import { Loader2, Search, X } from "lucide-react";
 import { Input } from "../ui/input";
+import { useRef, useEffect } from "react";
 
 interface Props {
   search: string;
   setSearch: (search: string) => void;
+  loading?: boolean;
+  autoFocus?: boolean;
 }
 
-const SearchInput = ({ search, setSearch }: Props) => {
+const SearchInput = ({
+  search,
+  setSearch,
+  loading = false,
+  autoFocus = true,
+}: Props) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Automatic focus on input
+  useEffect(() => {
+    if (autoFocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [autoFocus]);
+
+  const handleClear = () => {
+    setSearch("");
+    inputRef.current?.focus(); // Keep cursor in input
+  };
+
   return (
-    <form className="relative" onSubmit={(e) => e.preventDefault()}>
+    <form
+      className="relative"
+      onSubmit={(e) => e.preventDefault()}
+      role="search"
+    >
+      {/* Hidden label for screen readers */}
+      <label htmlFor="product-search" className="sr-only">
+        Buscar productos
+      </label>
+
+      {/* Input */}
       <Input
+        id="product-search"
+        ref={inputRef}
+        type="search"
         placeholder="Busca tu producto aquí..."
         className="flex-1 rounded-md py-5"
         value={search}
         onChange={(e) => setSearch(e.target.value.trimStart())}
+        autoComplete="off"
+        aria-label="Buscar productos"
       />
 
       {/* Clear button */}
       {search && (
-        <X
-          className="w-4 h-4 absolute top-3 right-12 hover:text-red-600 hoverEffect"
-          onClick={() => setSearch("")}
-        />
+        <button
+          type="button"
+          onClick={handleClear}
+          className="absolute top-1/2 -translate-y-1/2 right-12 p-1 hover:bg-gray-100 rounded-full transition-colors hoverEffect"
+          aria-label="Limpiar búsqueda"
+          disabled={loading}
+        >
+          <X className="w-4 h-4 text-gray-500 hover:text-red-600 transition-colors" />
+        </button>
       )}
 
       {/* Submit button */}
       <button
         type="button"
-        className={`absolute w-10 h-full top-0 right-0 flex items-center justify-center rounded-tr-md rounded-br-md hover:bg-darkColor hover:text-white hoverEffect ${
-          search ? "bg-darkColor text-white" : "bg-darkColor/10"
+        className={`absolute w-10 h-full top-0 right-0 flex items-center justify-center rounded-tr-md rounded-br-md hoverEffect ${
+          search
+            ? "bg-darkColor text-white hover:bg-darkColor/90"
+            : "bg-darkColor/10 hover:bg-darkColor/20"
         }`}
+        disabled={loading || !search}
+        aria-label="Buscar"
       >
-        <Search className="w-5 h-5" />
+        {loading ? (
+          <Loader2 className="w-5 h-5 animate-spin" />
+        ) : (
+          <Search className="w-5 h-5" />
+        )}
       </button>
     </form>
   );

@@ -14,6 +14,7 @@ import QuantityButtons from "./QuantityButtons";
 import { getProductUrl } from "@/app/constants";
 import { Product } from "@/sanity.types";
 import { useZustandSnapshot } from "@/hooks/useZustandSnapshot";
+import NoImageFallback from "../Image/NoImageFallback";
 
 interface Props {
   product: Product;
@@ -22,31 +23,36 @@ interface Props {
 
 const CartProductItem = ({ product, onDelete }: Props) => {
   const itemCount = useZustandSnapshot((s) => s.getItemCount(product._id), 0);
+  const productUrl = getProductUrl(product.slug?.current);
+  const productName = product.name || "Producto sin nombre";
 
   return (
     <div className="border-b p-2.5 last:border-b-0 flex items-center justify-between gap-5">
       <div className="flex flex-1 items-center gap-2 h-36 md:h-44">
         {/* Product Image */}
-        {product.images && (
-          <Link
-            href={getProductUrl(product.slug?.current)}
-            className="border p-0.5 md:p-1 mr-2 rounded-md overflow-hidden group"
-          >
+        <Link
+          href={productUrl}
+          className="w-32 md:w-40 h-32 md:h-40 border p-0.5 md:p-1 mr-2 rounded-md overflow-hidden group"
+          aria-label={`Ver detalles de ${productName}`}
+        >
+          {product.images && product.images.length > 0 ? (
             <Image
               src={urlFor(product.images[0]).url()}
-              alt={product.name || "Product"}
+              alt={productName}
               width={500}
               height={500}
               loading="lazy"
-              className="w-32 md:w-40 h-32 md:h-40 object-cover group-hover:scale-105 overflow-hidden hoverEffect"
+              className="object-cover w-full h-full group-hover:scale-105 overflow-hidden hoverEffect"
             />
-          </Link>
-        )}
+          ) : (
+            <NoImageFallback />
+          )}
+        </Link>
 
         {/* Product Info */}
         <div className="h-full flex flex-1 items-start flex-col justify-between py-1">
           <div className="space-y-1.5">
-            <h2 className="font-semibold line-clamp-1">{product.name}</h2>
+            <h2 className="font-semibold line-clamp-1">{productName}</h2>
             {product.intro && (
               <p className="text-sm text-lightColor font-medium">
                 {product.intro}

@@ -2,7 +2,7 @@ export const logoName = "Joyas Sol";
 export const getProductUrl = (slug: string | undefined) => {
   return `/product/${slug}`;
 };
-export const searchTextIsTooLong = (searchLength: number) => searchLength > 50;
+export const searchTextIsTooLong = (searchLength: number) => searchLength > 60;
 
 export const headerData = [
   { title: "Home", href: "/" },

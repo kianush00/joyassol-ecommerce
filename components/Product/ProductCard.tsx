@@ -5,6 +5,7 @@ import Link from "next/link";
 import PriceView from "../Price/PriceView";
 import AddToCartButton from "../Cart/AddToCartButton";
 import { getProductUrl } from "@/app/constants";
+import NoImageFallback from "../Image/NoImageFallback";
 
 interface Props {
   product: Product;
@@ -12,26 +13,29 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
   const isOutOfStock = !product.stock;
+  const productUrl = getProductUrl(product.slug?.current);
 
   return (
     <div className="group text-sm rounded-lg overflow-hidden">
       {/* PRODUCT IMAGE */}
       <div className="bg-linear-to-r from-zinc-200 via-zinc-300 to-zinc-200 overflow-hidden relative">
         {/* Product image */}
-        {product.images && (
-          <Link href={getProductUrl(product.slug?.current)}>
+        <Link href={productUrl}>
+          {product.images && product.images.length > 0 ? (
             <Image
               src={urlFor(product.images[0]).url()}
               width={500}
               height={500}
-              alt="productImage"
+              alt={product.name || "Producto sin nombre"}
               priority
               className={`w-full h-72 object-contain overflow-hidden hoverEffect ${
                 !isOutOfStock && "group-hover:scale-105"
               }`}
             />
-          </Link>
-        )}
+          ) : (
+            <NoImageFallback className="w-full h-72" />
+          )}
+        </Link>
 
         {/* Out of stock */}
         {isOutOfStock && (

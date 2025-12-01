@@ -8,6 +8,7 @@ import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
+import NoImagesFallback from "./NoImagesFallback";
 
 export type SanityImage = {
   asset?: {
@@ -43,11 +44,7 @@ const ImageView = ({ images }: Props) => {
 
   // Fallback if no images
   if (!images?.length) {
-    return (
-      <div className="w-full md:w-1/2 flex items-center justify-center border rounded-md text-lightColor">
-        No hay imágenes disponibles
-      </div>
-    );
+    return <NoImagesFallback />;
   }
 
   return (

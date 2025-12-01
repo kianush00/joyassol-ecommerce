@@ -14,16 +14,23 @@ import SearchEmptyState from "./SearchEmptyState";
 import SearchResultItem from "./SearchResultItem";
 import SearchLoadingState from "./SearchLoadingState";
 import { useProductSearch } from "@/hooks/useProductSearch";
+import ResultsCounter from "./ResultsCounter";
 
 const SearchBar = () => {
-  const { search, setSearch, products, loading } = useProductSearch(300);
+  const { search, setSearch, products, loading } = useProductSearch();
   const [showSearch, setShowSearch] = useState(false);
+  const handleOpenChange = (open: boolean) => {
+    setShowSearch(open);
+    if (!open) {
+      setSearch("");
+    }
+  };
 
   return (
-    <Dialog open={showSearch} onOpenChange={setShowSearch}>
+    <Dialog open={showSearch} onOpenChange={handleOpenChange}>
       {/* Trigger Button */}
       <DialogTrigger
-        aria-label="Open search dialog"
+        aria-label="Abrir búsqueda de productos"
         onClick={() => setShowSearch(true)}
       >
         <Search className="w-5 h-5 hover:text-darkColor hoverEffect" />
@@ -35,17 +42,26 @@ const SearchBar = () => {
           <DialogTitle className="mb-1">Búsqueda de productos</DialogTitle>
 
           {/* SEARCH INPUT */}
-          <SearchInput search={search} setSearch={setSearch} />
+          <SearchInput
+            search={search}
+            setSearch={setSearch}
+            loading={loading}
+            autoFocus={true}
+          />
         </DialogHeader>
 
         {/* SEARCH RESULTS */}
-        <div className="w-full h-full overflow-y-scroll border border-darkColor/20 rounded-md">
+        <div className="w-full h-full overflow-y-auto border border-darkColor/20 rounded-md">
           {/* Loading state */}
           {loading && <SearchLoadingState />}
 
           {/* Results */}
           {!loading && products.length > 0 && (
-            <>
+            <div>
+              {/* Results counter */}
+              <ResultsCounter products={products} />
+
+              {/* Result Items */}
               {products.map((product: Product) => (
                 <SearchResultItem
                   key={product._id}
@@ -53,12 +69,12 @@ const SearchBar = () => {
                   setShowSearch={setShowSearch}
                 />
               ))}
-            </>
+            </div>
           )}
 
           {/* Empty State */}
           {!loading && products.length === 0 && (
-            <SearchEmptyState search={search} />
+            <SearchEmptyState search={search} setShowSearch={setShowSearch} />
           )}
         </div>
       </DialogContent>

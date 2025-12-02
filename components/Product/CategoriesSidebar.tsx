@@ -2,6 +2,7 @@
 import { CATEGORIES_QUERYResult } from "@/sanity.types";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { getCategoryUrl } from "@/app/constants";
 
 interface Props {
   categories: CATEGORIES_QUERYResult;
@@ -18,7 +19,7 @@ const CategoriesSidebar = ({ categories, currentSlug }: Props) => {
         return (
           <Button
             key={item?._id ?? itemSlug}
-            onClick={() => router.push(`/category/${itemSlug}`)}
+            onClick={() => router.push(getCategoryUrl(itemSlug))}
             className={`bg-transparent border-0 rounded-none text-darkColor shadow-none hover:bg-darkColor/80 hover:text-white font-semibold hoverEffect border-b last:border-b-0 ${
               currentSlug === itemSlug &&
               "bg-darkColor text-white border-darkColor"

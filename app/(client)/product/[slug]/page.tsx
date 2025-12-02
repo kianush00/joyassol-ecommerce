@@ -20,7 +20,9 @@ interface Props {
 const SingleProductPage = async ({ params }: Props) => {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
-  if (!product) notFound();
+  if (!product) {
+    notFound();
+  }
 
   return (
     <Container className="py-10 flex flex-col md:flex-row gap-10">

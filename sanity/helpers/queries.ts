@@ -25,7 +25,7 @@ export const getAllProducts = async (): Promise<PRODUCTS_QUERYResult> => {
 
 export const getProductBySlug = async (
   slug: string
-): Promise<PRODUCT_BY_SLUG_QUERYResult | undefined> => {
+): Promise<PRODUCT_BY_SLUG_QUERYResult | null> => {
   const PRODUCT_BY_SLUG_QUERY = defineQuery(
     `*[_type == "product" && slug.current == $slug] | order(name asc) [0]`
   );
@@ -34,9 +34,10 @@ export const getProductBySlug = async (
       query: PRODUCT_BY_SLUG_QUERY,
       params: { slug },
     });
-    return product?.data || undefined;
+    return product?.data || null;
   } catch (error) {
     console.error("Error fetching product by Slug:", error);
+    return null;
   }
 };
 

@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import { X } from "lucide-react";
 import SocialMedia from "./SocialMedia";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
-import { logoName } from "../app/constants/index";
+import { getCategoryUrl, logoName } from "../app/constants/index";
 import { CATEGORIES_QUERYResult } from "@/sanity.types";
 import MenuItem from "./MenuItem";
 
@@ -51,7 +51,7 @@ const Sidebar = ({ isOpen, onClose, categories }: Props) => {
           {categories?.map((item) => (
             <MenuItem
               key={item?.title}
-              href={`/category/${item?.slug?.current}`}
+              href={getCategoryUrl(item?.slug?.current)}
               title={item?.title || "Category"}
               onClick={onClose}
               className="w-40"

@@ -2,17 +2,10 @@ export const logoName = "Joyas Sol";
 export const getProductUrl = (slug: string | undefined) => {
   return `/product/${slug}`;
 };
+export const getCategoryUrl = (slug: string | undefined) => {
+  return `/category/${slug}`;
+};
 export const searchTextIsTooLong = (searchLength: number) => searchLength > 60;
-
-export const headerData = [
-  { title: "Home", href: "/" },
-  { title: "Men", href: "/men-s-fashion" },
-  { title: "Woman", href: "/woman" },
-  { title: "Kids", href: "/kids" },
-  { title: "New", href: "/new" },
-  { title: "Featured", href: "/featured" },
-  { title: "Gift", href: "/gift" },
-];
 
 export const productType = [
   { title: "Tshirt" },
@@ -31,10 +24,10 @@ export const quickLinksData = [
 ];
 
 export const categoriesData = [
-  { title: "Men", href: "/category/men-s-fashion" },
-  { title: "Woman", href: "/category/woman" },
-  { title: "Kids", href: "/category/kids" },
-  { title: "Others", href: "/category/others" },
+  { title: "Men", href: getCategoryUrl("men-s-fashion") },
+  { title: "Woman", href: getCategoryUrl("woman") },
+  { title: "Kids", href: getCategoryUrl("kids") },
+  { title: "Others", href: getCategoryUrl("others") },
 ];
 
 export const faqsData = [

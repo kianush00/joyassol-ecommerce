@@ -29,7 +29,7 @@ const Header = async () => {
           <Logo>{logoName}</Logo>
         </div>
         <div className="w-auto md:w-1/3 flex items-center justify-end gap-5">
-          <SearchBar aria-label="Open product search" />
+          <SearchBar />
           <CartIcon />
           <ClerkLoaded>
             <SignedIn>

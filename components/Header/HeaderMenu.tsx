@@ -22,6 +22,8 @@ const HeaderMenu = ({ categories }: Props) => {
           hasUnderlineEffect={true}
         />
       ))}
+
+      <MenuItem href="/shop" title="Tienda" hasUnderlineEffect={true} />
     </div>
   );
 };

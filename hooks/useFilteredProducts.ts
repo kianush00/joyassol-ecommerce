@@ -6,10 +6,10 @@ import { QueryParams } from "next-sanity";
 
 interface Props {
   query: string;
-  params?: QueryParams;
+  params: QueryParams;
 }
 
-export function useFilteredProducts({ query, params = {} }: Props) {
+export function useFilteredProducts({ query, params }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 interface Props {
-  selectedTab: string;
+  selectedTab?: string;
   className?: string;
 }
 
@@ -30,11 +30,17 @@ const NoProductsAvailable = ({ selectedTab, className }: Props) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
-        Lo sentimos, pero no hay productos disponibles para la categoría{" "}
-        <span className="text-base font-semibold text-darkColor">
-          {selectedTab}
-        </span>
-        {"."}
+        {selectedTab ? (
+          <>
+            Lo sentimos, pero no hay productos disponibles para la categoría{" "}
+            <span className="text-base font-semibold text-darkColor">
+              {selectedTab}
+            </span>
+            {"."}
+          </>
+        ) : (
+          "Lo sentimos, pero no hay productos disponibles en este momento."
+        )}
       </motion.p>
       <motion.div
         animate={{ scale: [1, 1.1, 1] }}

@@ -4,6 +4,8 @@ import { Toaster } from "react-hot-toast";
 import { logoName } from "../constants";
 import Header from "@/components/Header/Header";
 import { SanityLive } from "@/sanity/lib/live";
+import { ClerkProvider } from "@clerk/nextjs";
+import { esMX } from "@clerk/localizations";
 
 export const metadata: Metadata = {
   title: `${logoName} Ecommerce app for shoppers`,
@@ -16,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <ClerkProvider localization={esMX}>
       <Header />
       {children}
       <Footer />
@@ -30,6 +32,6 @@ export default function RootLayout({
         }}
       />
       <SanityLive />
-    </div>
+    </ClerkProvider>
   );
 }

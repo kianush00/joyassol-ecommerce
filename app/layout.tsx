@@ -1,10 +1,8 @@
 import React from "react";
-import { ClerkProvider } from "@clerk/nextjs";
 import localFont from "next/font/local";
 import { Metadata } from "next";
 import "./globals.css";
 import { logoName } from "./constants";
-import { esMX } from "@clerk/localizations";
 
 export const metadata: Metadata = {
   title: `${logoName} Ecommerce app for shoppers`,
@@ -23,11 +21,9 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <ClerkProvider localization={esMX}>
-      <html lang="es">
-        <body className={`${raleway.variable} antialiased`}>{children}</body>
-      </html>
-    </ClerkProvider>
+    <html lang="es">
+      <body className={`${raleway.variable} antialiased`}>{children}</body>
+    </html>
   );
 };
 

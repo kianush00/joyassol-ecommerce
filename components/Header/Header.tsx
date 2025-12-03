@@ -5,16 +5,11 @@ import MobileMenu from "../MobileMenu";
 import SearchBar from "../Search/SearchBar";
 import CartIcon from "../Cart/CartIcon";
 import { auth } from "@clerk/nextjs/server";
-import {
-  ClerkLoaded,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkLoaded, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { getAllCategories, getMyOrders } from "@/sanity/helpers/queries";
 import OrdersIcon from "../Order/OrdersIcon";
 import { logoName } from "@/app/constants";
+import SignInLink from "./SignInLink";
 
 const Header = async () => {
   const { userId } = await auth();
@@ -42,11 +37,7 @@ const Header = async () => {
               <UserButton />
             </SignedIn>
             <SignedOut>
-              <SignInButton mode="modal">
-                <button className="text-sm font-semibold hover:text-darkColor hoverEffect">
-                  Login
-                </button>
-              </SignInButton>
+              <SignInLink />
             </SignedOut>
           </ClerkLoaded>
         </div>

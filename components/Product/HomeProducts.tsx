@@ -10,7 +10,7 @@ import ProductsErrorState from "./ProductsErrorState";
 import { QueryParams } from "next-sanity";
 
 const MAX_RESULTS = 50;
-const PRODUCTS_QUERY = `*[
+const PRODUCTS_BY_VARIANT_QUERY = `*[
           _type == "product" && variant == $variant
           ][0...${MAX_RESULTS}] | order(name asc)`;
 
@@ -22,7 +22,7 @@ const HomeProducts = () => {
   );
 
   const { products, loading, error, refetch } = useFilteredProducts({
-    query: PRODUCTS_QUERY,
+    query: PRODUCTS_BY_VARIANT_QUERY,
     params: queryParams,
   });
 

@@ -9,22 +9,33 @@ const isProtectedRoute = createRouteMatcher([
   "/account(.*)",
   "/wishlist(.*)",
   "/checkout(.*)",
+  "/cart(.*)",
+  "/orders(.*)",
 ]);
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
+const redirectToSignInPage = (req: NextRequest) => {
+  const signInUrl = new URL(
+    process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL as string,
+    req.url
+  );
+  signInUrl.searchParams.set("redirect_url", req.url);
+  return NextResponse.redirect(signInUrl);
+};
+
 export default clerkMiddleware(async (auth, req: NextRequest) => {
-  const { redirectToSignIn, isAuthenticated, sessionClaims } = await auth();
+  const { isAuthenticated, sessionClaims } = await auth();
 
   // Normal routes protected
   if (isProtectedRoute(req) && !isAuthenticated) {
-    return redirectToSignIn();
+    return redirectToSignInPage(req);
   }
 
   // Role-protected admin routes
   if (isAdminRoute(req)) {
     if (!isAuthenticated) {
-      return redirectToSignIn();
+      return redirectToSignInPage(req);
     }
 
     if ((sessionClaims as CustomSessionClaims).user_role !== "admin") {

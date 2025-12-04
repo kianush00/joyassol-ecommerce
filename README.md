@@ -2,22 +2,25 @@
 
 > A modern, full-stack ecommerce platform built with Next.js 16, Sanity CMS, Clerk Auth, and Stripe
 
-[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![React 19](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8)
+![Sanity](https://img.shields.io/badge/Sanity-CMS-f03e2f)
+![Stripe](https://img.shields.io/badge/Stripe-Payments-008cdd)
+![Clerk](https://img.shields.io/badge/Clerk-Auth-6c47ff)
+![Zustand](https://img.shields.io/badge/Zustand-State-583d72)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ## 📑 Table of Contents
 
 - [Preview](#-preview)
 - [Features](#-features)
-- [Tech Stack](#-tech-stack)
 - [Prerequisites](#-prerequisites)
 - [Getting Started](#-getting-started)
 - [Environment Variables](#-environment-variables)
 - [Project Structure](#-project-structure)
 - [Deployment](#-deployment)
-- [Troubleshooting](#-troubleshooting)
 - [Contributing](#-contributing)
 - [License](#-license)
 - [Credits](#-credits)
@@ -40,17 +43,6 @@
 - 🎨 **Modern UI** - Beautiful interface with Tailwind CSS + shadcn/ui
 - ⚡ **Performance** - Optimized with Next.js 16 App Router
 - 📦 **TypeScript** - Full type safety throughout the application
-
-## 🛠️ Tech Stack
-
-![Next.js](https://img.shields.io/badge/Next.js-16-black)
-![React](https://img.shields.io/badge/React-19-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8)
-![Sanity](https://img.shields.io/badge/Sanity-CMS-f03e2f)
-![Stripe](https://img.shields.io/badge/Stripe-Payments-008cdd)
-![Clerk](https://img.shields.io/badge/Clerk-Auth-6c47ff)
-![Zustand](https://img.shields.io/badge/Zustand-State-583d72)
 
 ## 📋 Prerequisites
 
@@ -176,6 +168,7 @@ stripe listen --forward-to http://localhost:3000/api/webhook
 
 ## 📁 Project Structure
 
+```
 joyassol-ecommerce/
 ├── actions/ # Server Actions
 ├── app/ # Next.js App Router
@@ -192,6 +185,7 @@ joyassol-ecommerce/
 ├── sanity/ # Sanity CMS configuration
 │ ├── schemas/ # Content schemas
 │ └── lib/ # Sanity utilities
+```
 
 ## 🚢 Deployment
 
@@ -254,4 +248,10 @@ Inspired by the excellent work of **Noor Mohammad** ([@noorjsdivs](https://githu
 
 ---
 
-Made by [kianush00](https://github.com/kianush00)
+<div align="center">
+
+**Made with ❤️ by [kianush00](https://github.com/kianush00)**
+
+⭐ Star this repo if you find it helpful!
+
+</div>

@@ -202,7 +202,7 @@ In production, add your Vercel URL to Stripe:
 
 https://your-domain.vercel.app/api/webhook
 
-## Customizing
+## ⚙️ Customizing
 
 To tailor the template to your needs:
 

@@ -1,107 +1,212 @@
 # Joyas Sol Ecommerce Application
 
-This is a Next.js-based ecommerce application template integrated with Sanity for content management, Clerk for authentication and Stripe for payments.
-Follow the steps below to set up and customize the application.
+> A modern, full-stack ecommerce platform built with Next.js 16, Sanity CMS, Clerk Auth, and Stripe
+
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+## 📑 Table of Contents
+
+- [Preview](#-preview)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Getting Started](#-getting-started)
+- [Environment Variables](#-environment-variables)
+- [Project Structure](#-project-structure)
+- [Deployment](#-deployment)
+- [Troubleshooting](#-troubleshooting)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Credits](#-credits)
 
 ## 🔗 Preview
 
-## ![Dashboard Preview](/public/preview_image.png)
+- **Live Demo:** [https://joyassol.cl](https://joyassol.cl)
+- **Sanity Studio:** [https://joyassol.cl/admin/studio](https://joyassol.cl/admin/studio)
 
-## Getting started
+![Dashboard Preview](./public/preview_image.png)
 
-To set up the Joyas Sol Ecommerce Application, follow these steps:
+## ✨ Features
 
-### 1. Install pnpm Dependencies
+- 🛒 **Shopping Cart** - Full-featured cart with Zustand state management
+- 🔐 **Authentication** - Secure auth with Clerk (Google, Facebook, Email)
+- 💳 **Payments** - Stripe integration for secure payments
+- 📝 **CMS** - Content management with Sanity headless CMS
+- 🔍 **Search** - Real-time product search with filtering
+- 📱 **Responsive** - Mobile-first design approach
+- 🎨 **Modern UI** - Beautiful interface with Tailwind CSS + shadcn/ui
+- ⚡ **Performance** - Optimized with Next.js 16 App Router
+- 📦 **TypeScript** - Full type safety throughout the application
 
-First, install the required npm dependencies by running the following command in your terminal:
+## 🛠️ Tech Stack
+
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![React](https://img.shields.io/badge/React-19-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8)
+![Sanity](https://img.shields.io/badge/Sanity-CMS-f03e2f)
+![Stripe](https://img.shields.io/badge/Stripe-Payments-008cdd)
+![Clerk](https://img.shields.io/badge/Clerk-Auth-6c47ff)
+![Zustand](https://img.shields.io/badge/Zustand-State-583d72)
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have:
+
+- **Node.js** 18 or higher
+- **pnpm** package manager
+- **Git** for version control
+- Accounts on:
+  - [Sanity.io](https://www.sanity.io)
+  - [Clerk](https://clerk.dev)
+  - [Stripe](https://stripe.com)
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/kianush00/joyassol-ecommerce.git
+cd joyassol-ecommerce
+```
+
+### 2. Install Dependencies
 
 ```bash
 pnpm install
 ```
 
-This will download all the necessary packages listed in package.json.
+### 3. Set Up Sanity CMS
 
-## 2. Create a New Sanity Project
-
-Set up a Sanity project to manage your ecommerce content:
+1. Create a Sanity account at [sanity.io](https://www.sanity.io)
+2. Create a new project in the Sanity dashboard
+3. Copy your Project ID
 
 ```bash
-pnpm create sanity@latest -- --env=.env.local --create-project "Joyassol ecommerce" --dataset production
+# Initialize Sanity in your project
+pnpm create sanity@latest -- --project YOUR_PROJECT_ID --dataset production --template clean
 ```
 
-If you don’t have a Sanity account, this command will guide you to create one.
-When prompted with "Would you like to add configuration files for a Sanity project in this Next.js folder?", select "n" (no), as the --env=.env.local flag handles this automatically.
-After running this command, a .env.local file will be created (or updated) in your project root with:
-NEXT_PUBLIC_SANITY_PROJECT_ID: A unique ID for your Sanity project, generated during this step.
-NEXT_PUBLIC_SANITY_DATASET: Set to production.
+### 4. Configure Environment Variables
 
-- Note: You can verify your NEXT_PUBLIC_SANITY_PROJECT_ID later by logging into https://www.sanity.io/manage, selecting the "Joyassol ecommerce" project, and checking the project details.
-
-## 3. Set Up Environment Variables
-
-The application requires additional environment variables beyond those set in Step 2. Edit your .env file in the project root to include the following:
+Create a `.env` file in the root directory:
 
 ```bash
-
+# Base URL
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
-NEXT_PUBLIC_SANITY_PROJECT_ID=<already-set-by-step-2>
-NEXT_PUBLIC_SANITY_DATASET="production"
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/signin
-SANITY_API_TOKEN=<your-sanity-api-token>
-SANITY_API_READ_TOKEN=<your-sanity-api-read-token>
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>
-CLERK_SECRET_KEY=<your-clerk-secret-key>
-STRIPE_SECRET_KEY=<your-stripe-secret-key>
-STRIPE_WEBHOOK_KEY=<your-stripe-webhook-key>
 
+# Sanity
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+NEXT_PUBLIC_SANITY_DATASET=production
+SANITY_API_TOKEN=your_api_token
+SANITY_API_READ_TOKEN=your_read_token
+
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/signin
+
+# Stripe Payments
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 ```
 
-### Where to Find These Credentials
+> ⚠️ **Important:** Never commit your `.env` file. It's already in `.gitignore`.
 
-#### Sanity Variables:
+#### Where to Find These Keys
 
-SANITY_API_TOKEN and SANITY_API_READ_TOKEN:
-Visit https://www.sanity.io/manage.
-Select your "Joyassol ecommerce" project.
-Go to the "API" section.
-Click "Add API token" and create tokens with the appropriate permissions (e.g., "Editor" for write, "Viewer" for read).
-Copy the tokens into .env.local.
+**Sanity:**
 
-#### Clerk Variables:
+- Go to [sanity.io/manage](https://www.sanity.io/manage)
+- Select your project → API → Add API Token
 
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY and CLERK_SECRET_KEY: Sign up at https://clerk.dev, create an application, and find these keys in your Clerk dashboard.
+**Clerk:**
 
-#### Stripe Variables:
+- Dashboard at [dashboard.clerk.com](https://dashboard.clerk.com)
+- API Keys section
 
-STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET: Register at https://stripe.com, create an account, and retrieve these from your Stripe dashboard.
+**Stripe:**
 
-#### Additional Notes:
+- Dashboard at [dashboard.stripe.com](https://dashboard.stripe.com)
+- Developers → API Keys
 
-NEXT_PUBLIC_BASE_URL: Set to http://localhost:3000 for local development. Update to your live domain (e.g., https://joyassol.cl/) when deploying.
-Do not commit .env.local to version control, as it contains sensitive data. Next.js automatically excludes it via .gitignore.
+### 5. Grant Admin Access
 
-## 4. Optionally Import Demo Seed Data
+To access the Sanity Studio:
 
-To populate your Sanity project with sample data (e.g., products or blog posts), run:
+1. Go to [dashboard.clerk.com](https://dashboard.clerk.com)
+2. Users → Select your user → Metadata
+3. Edit "Public" metadata:
+
+```json
+{
+  "role": "admin"
+}
+```
+
+### 6. (Optional) Import Demo Data
 
 ```bash
-npx sanity@latest dataset import seed.tar.gz
+pnpm dlx sanity@latest dataset import seed.tar.gz
 ```
 
-This step is optional and requires a seed.tar.gz file, which may be included with the template.
-
-## 5. Run the Development Server
-
-Launch the Next.js development server with:
+### 7. Run Development Server
 
 ```bash
 pnpm dev
 ```
 
-## 6. Access the Application
+Visit:
 
-- Visit http://localhost:3000 in your browser to see the ecommerce website.
-- Go to http://localhost:3000/admin/studio to access the Sanity Studio and manage your content.
+- **Frontend:** [http://localhost:3000](http://localhost:3000)
+- **Sanity Studio:** [http://localhost:3000/admin/studio](http://localhost:3000/admin/studio)
+
+### 8. Test Stripe Webhooks (Local Development)
+
+In a separate terminal, forward Stripe events:
+
+```bash
+stripe listen --forward-to http://localhost:3000/api/webhook
+```
+
+> 💡 **Note:** This is only for local testing. In production, configure webhooks in Stripe Dashboard.
+
+## 📁 Project Structure
+
+joyassol-ecommerce/
+├── actions/ # Server Actions
+├── app/ # Next.js App Router
+│ ├── (client)/ # Client-facing pages
+│ └── admin/ # Admin dashboard
+├── components/ # React components
+│ ├── ui/ # shadcn/ui components
+│ ├── Cart/ # Cart components
+│ ├── Product/ # Product components
+│ └── ...
+├── hooks/ # Custom React hooks
+├── lib/ # Utility functions
+└── public/ # Static assets
+├── sanity/ # Sanity CMS configuration
+│ ├── schemas/ # Content schemas
+│ └── lib/ # Sanity utilities
+
+## 🚢 Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Import project in [Vercel](https://vercel.com)
+3. Configure environment variables
+4. Deploy!
+
+### Configure Stripe Webhooks
+
+In production, add your Vercel URL to Stripe:
+
+https://your-domain.vercel.app/api/webhook
 
 ## Customizing
 
@@ -109,44 +214,44 @@ To tailor the template to your needs:
 
 - Modify files in the /app and /components directories.
 - Changes will reflect instantly due to Next.js’s hot reloading feature.
+- After modifying any Sanity's schema types, or after adding a new GROQ query, run the following command to generate GROQ query typing:
 
-# Learn More
+```bash
+pnpm typegen
+```
 
-Dive into the technologies used in this application:
+## 🤝 Contributing
 
-- Tailwind CSS - Utility-first CSS framework for styling [ https://tailwindcss.com/ ]
-- @clerk/nextjs - Clerk’s Next.js integration for authentication and user management [ https://clerk.com/docs ]
-- @headlessui/react - Unstyled, accessible UI components for React [ https://headlessui.com/ ]
-- @radix-ui - Accessible component from Radix UI [ https://www.radix-ui.com/ ]
-- @sanity/client - JavaScript client for interacting with Sanity APIs [ https://www.sanity.io/docs/client-libraries ]
-- @sanity/icons - Icon library for Sanity projects [ https://www.sanity.io/plugins/icons ]
-- @sanity/image-url - Utility for generating image URLs from Sanity assets [ https://www.sanity.io/docs/image-url ]
-- @sanity/preview-url-secret - Utility for secure preview URLs in Sanity [ https://www.sanity.io/docs/preview-url-secret ]
-- @sanity/vision - Debugging tool for Sanity queries [ https://www.sanity.io/plugins/vision ]
-- @types/lodash - TypeScript definitions for Lodash [ https://www.npmjs.com/package/@types/lodash ]
-- class-variance-authority - Utility for managing class variants in JavaScript/TypeScript [ https://cva.style/docs ]
-- clsx - Utility for constructing className strings conditionally [ https://github.com/lukeed/clsx ]
-- cmdk - Command menu component for React [ https://cmdk.paco.me/ ]
-- date-fns - Modern JavaScript date utility library [ https://date-fns.org/docs ]
-- dayjs - Lightweight date manipulation library [ https://day.js.org/docs ]
-- embla-carousel-react - Extensible carousel library for React [ https://www.embla-carousel.com/ ]
-- framer-motion - Animation library for React [ https://www.framer.com/motion/ ]
-- install - Utility for installing npm packages [ https://www.npmjs.com/package/install ]
-- lucide-react - Beautiful & consistent icons for React [ https://lucide.dev/ ]
-- motion - Alias for Framer Motion, an animation library for React [ https://www.framer.com/motion/ ]
-- next - React framework for server-rendered applications [ https://nextjs.org/docs ]
-- next-sanity - Toolkit for integrating Sanity with Next.js [ https://www.sanity.io/docs/nextjs ]
-- react - JavaScript library for building user interfaces [ https://react.dev/ ]
-- react-dom - DOM-specific methods for React [ https://react.dev/reference/react-dom ]
-- react-hot-toast - Notifications library for React [ https://react-hot-toast.com/ ]
-- react-icons - Popular icons in React [ https://react-icons.github.io/react-icons/ ]
-- sanity - Content management platform [ https://www.sanity.io/docs ]
-- stripe - Payment processing platform [ https://stripe.com/docs ]
-- styled-components - CSS-in-JS styling solution [ https://styled-components.com/docs ]
-- tailwind-merge - Utility for merging Tailwind CSS classes [ https://github.com/dcastil/tailwind-merge ]
-- tailwindcss-animate - Animation utilities for Tailwind CSS [ https://github.com/jamiebuilds/tailwindcss-animate ]
-- zustand - State management for React [ https://zustand-demo.pmnd.rs/ ]
+Contributions are welcome! Please:
 
-## Credits
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
-- Inspired by the work of **Noor Mohammad [@noorjsdivs](https://github.com/noorjsdivs) ** and his repository **[Tulos Ecommerce](https://github.com/noorjsdivs/tulos_updated)**.
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 💬 Support
+
+- 📧 Email: [kianush.atighi@gmail.com](mailto:kianush.atighi@gmail.com)
+- 🐛 Issues: [GitHub Issues](https://github.com/kianush00/joyassol-ecommerce/issues)
+
+## 🙏 Credits
+
+Inspired by the excellent work of **Noor Mohammad** ([@noorjsdivs](https://github.com/noorjsdivs)) and his [Tulos Ecommerce](https://github.com/noorjsdivs/tulos_updated) project.
+
+## 📚 Learn More
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Sanity Documentation](https://www.sanity.io/docs)
+- [Clerk Documentation](https://clerk.dev/docs)
+- [Stripe Documentation](https://stripe.com/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [shadcn/ui](https://ui.shadcn.com/)
+
+---
+
+Made by [kianush00](https://github.com/kianush00)

@@ -5,13 +5,11 @@ import CartContent from "@/components/Cart/CartContent";
 import { useZustandSnapshot } from "@/hooks/useZustandSnapshot";
 
 const CartPage = () => {
-  const groupedItems = useZustandSnapshot((s) => s.getGroupedItems(), []);
+  const totalItems = useZustandSnapshot((s) => s.getTotalItems(), 0);
 
   return (
     <div className="bg-gray-50 pb-52 md:pb-10">
-      <Container>
-        {groupedItems.length ? <CartContent /> : <EmptyCart />}
-      </Container>
+      <Container>{totalItems ? <CartContent /> : <EmptyCart />}</Container>
     </div>
   );
 };

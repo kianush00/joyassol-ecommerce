@@ -2,14 +2,14 @@
 
 > A modern, full-stack ecommerce platform built with Next.js 16, Sanity CMS, Clerk Auth, and Stripe
 
-[![Next.js 16](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![React 19](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8)
-![Sanity](https://img.shields.io/badge/Sanity-CMS-f03e2f)
-![Stripe](https://img.shields.io/badge/Stripe-Payments-008cdd)
-![Clerk](https://img.shields.io/badge/Clerk-Auth-6c47ff)
-![Zustand](https://img.shields.io/badge/Zustand-State-583d72)
+[![Next.js 16.0.7](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![React 19.2.1](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
+[![TypeScript 5.9.3](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![Tailwind 4.1.17](https://img.shields.io/badge/Tailwind-3-38bdf8)](https://tailwindcss.com/)
+![Sanity 4.20.0](https://img.shields.io/badge/Sanity-CMS-f03e2f)
+![Stripe 20.0.0](https://img.shields.io/badge/Stripe-Payments-008cdd)
+![Clerk 6.35.6](https://img.shields.io/badge/Clerk-Auth-6c47ff)
+![Zustand 5.0.9](https://img.shields.io/badge/Zustand-State-583d72)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ## 📑 Table of Contents
@@ -206,12 +206,56 @@ https://your-domain.vercel.app/api/webhook
 
 To tailor the template to your needs:
 
-- Modify files in the /app and /components directories.
-- Changes will reflect instantly due to Next.js’s hot reloading feature.
-- After modifying any Sanity's schema types, or after adding a new GROQ query, run the following command to generate GROQ query typing:
+### 📝 General Modifications
+
+- Modify files in the `/app` and `/components` directories
+- Changes will reflect instantly due to Next.js's hot reloading feature
+- Update constants in `/app/constants/index.ts` for site-wide settings (logo name, product types, etc.)
+
+### 🎨 Adding shadcn/ui Components
+
+```bash
+# Add new UI components from shadcn/ui
+npx shadcn@latest add button
+npx shadcn@latest add card
+npx shadcn@latest add dialog
+# Components will be added to /components/ui/
+```
+
+### 🔄 Sanity Schema Changes
+
+After modifying Sanity schema types or adding new GROQ queries:
 
 ```bash
 pnpm typegen
+```
+
+This regenerates TypeScript types for type-safe queries.
+
+### 🎨 Styling
+
+- Global styles: `/app/globals.css`
+- Tailwind config: `tailwind.config.ts`
+- Custom colors and themes in `tailwind.config.ts`
+
+### 🔧 Adding Custom Hooks
+
+- Place custom hooks in `/hooks/` directory
+- Example: `/hooks/useZustandSnapshot.ts`, `/hooks/useOAuthSignIn.ts`
+
+### 🛒 State Management
+
+- Cart state managed with Zustand in `store.ts`
+- Modify cart logic, add new stores as needed
+
+### 🗂️ Adding New Routes
+
+```bash
+# Create new page
+app/(client)/my-page/page.tsx
+
+# Create new API route
+app/(client)/api/my-endpoint/route.ts
 ```
 
 ## 🤝 Contributing

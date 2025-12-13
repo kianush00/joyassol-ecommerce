@@ -12,18 +12,20 @@ import { useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
 import Loading from "../Loading";
 import { CheckCircle2, Loader2 } from "lucide-react";
+import useCartStore from "../../store";
 
 const CartOrderSummary = () => {
   const { user, isLoaded } = useUser();
   const [loading, setLoading] = useState(false);
-  const cartProducts = useZustandSnapshot((s) => s.getGroupedItems(), []);
+  const cartProducts = useCartStore((s) => s.getGroupedItems());
+  const totalItems = useZustandSnapshot((s) => s.getTotalItems(), 0);
   const totalPrice = useZustandSnapshot((s) => s.getTotalPrice(), 0);
   const subtotalPrice = useZustandSnapshot((s) => s.getSubtotalPrice(), 0);
 
   // Values and validations
   const discount = subtotalPrice - totalPrice;
   const hasDiscount = discount > 0;
-  const hasItems = cartProducts.length > 0;
+  const hasItems = totalItems > 0;
   const canCheckout = hasItems && isLoaded && user;
 
   /**

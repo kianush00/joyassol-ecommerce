@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/sanity.types";
 import { QueryParams } from "next-sanity";
@@ -13,7 +13,6 @@ export function useFilteredProducts({ query, params }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [refetchTrigger, setRefetchTrigger] = useState(0);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -41,11 +40,7 @@ export function useFilteredProducts({ query, params }: Props) {
     fetchData();
 
     return () => controller.abort();
-  }, [query, params, refetchTrigger]);
+  }, [query, params]);
 
-  const refetch = useCallback(() => {
-    setRefetchTrigger((prev) => prev + 1);
-  }, []);
-
-  return { products, loading, error, refetch };
+  return { products, loading, error };
 }

@@ -224,13 +224,62 @@ npx shadcn@latest add dialog
 
 ### 🔄 Sanity Schema Changes
 
-After modifying Sanity schema types or adding new GROQ queries:
+#### 1. Create a new schema type
+
+- Create a new file in `/sanity/schemaTypes/` (e.g. `product.ts`)
+- Define the schema:
+
+```ts
+import { defineType, defineField } from "sanity";
+
+export default defineType({
+  name: "product",
+  title: "Product",
+  type: "document",
+  fields: [
+    defineField({
+      name: "title",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "price",
+      type: "number",
+    }),
+  ],
+});
+```
+
+#### 2. Register the schema
+
+- Add the new schema to your main schema index file:
+
+```ts
+// /sanity/schemaTypes/index.ts
+import product from "./product";
+
+export const schemaTypes = [product];
+```
+
+#### 3. Update queries (if needed)
+
+- Add or update GROQ queries in `/sanity/helpers/queries.ts` to fetch the new data:
+
+```ts
+*[_type == "product"]{
+  _id,
+  title,
+  price
+}
+```
+
+#### 4. Regenerate types
 
 ```bash
 pnpm typegen
 ```
 
-This regenerates TypeScript types for type-safe queries.
+This updates TypeScript types for type-safe queries.
 
 ### 🎨 Styling
 

@@ -34,12 +34,20 @@ const ImageView = ({ images }: Props) => {
 
   const mainUrl = useMemo(() => {
     if (!active) return "";
-    return urlFor(active).url();
+    return urlFor(active)
+      .width(1200)
+      .fit("max")
+      .auto("format")
+      .quality(85)
+      .url();
   }, [active]);
 
   const thumbUrls = useMemo(
-    () => images?.map((img) => urlFor(img).url()) ?? [],
-    [images]
+    () =>
+      images?.map((img) =>
+        urlFor(img).width(200).fit("crop").auto("format").quality(70).url(),
+      ) ?? [],
+    [images],
   );
 
   // Fallback if no images

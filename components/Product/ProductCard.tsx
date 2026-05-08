@@ -23,7 +23,12 @@ const ProductCard = ({ product }: Props) => {
         <Link href={productUrl}>
           {product.images && product.images.length > 0 ? (
             <Image
-              src={urlFor(product.images[0]).url()}
+              src={urlFor(product.images[0])
+                .width(800)
+                .fit("crop")
+                .auto("format")
+                .quality(85)
+                .url()}
               width={500}
               height={500}
               alt={product.name || "Producto sin nombre"}

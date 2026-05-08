@@ -82,7 +82,12 @@ const OrderDetailsDialog = ({
                   {product?.product?.images &&
                   product?.product?.images.length > 0 ? (
                     <Image
-                      src={urlFor(product?.product?.images[0]).url()}
+                      src={urlFor(product?.product?.images[0])
+                        .width(100)
+                        .fit("crop")
+                        .auto("format")
+                        .quality(70)
+                        .url()}
                       alt={product?.product?.name || "Producto sin nombre"}
                       width={50}
                       height={50}

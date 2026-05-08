@@ -25,6 +25,7 @@ const CartProductItem = ({ product, onDelete }: Props) => {
   const itemCount = useZustandSnapshot((s) => s.getItemCount(product._id), 0);
   const productUrl = getProductUrl(product.slug?.current);
   const productName = product.name || "Producto sin nombre";
+  const IMG_SIZE = 500;
 
   return (
     <div className="border-b p-2.5 last:border-b-0 flex items-center justify-between gap-5">
@@ -37,10 +38,15 @@ const CartProductItem = ({ product, onDelete }: Props) => {
         >
           {product.images && product.images.length > 0 ? (
             <Image
-              src={urlFor(product.images[0]).url()}
+              src={urlFor(product.images[0])
+                .width(IMG_SIZE)
+                .height(IMG_SIZE)
+                .fit("crop")
+                .auto("format")
+                .url()}
               alt={productName}
-              width={500}
-              height={500}
+              width={IMG_SIZE}
+              height={IMG_SIZE}
               loading="lazy"
               className="object-cover w-full h-full group-hover:scale-105 overflow-hidden hoverEffect"
             />

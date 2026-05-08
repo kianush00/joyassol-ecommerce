@@ -5,7 +5,7 @@ export const getProductUrl = (slug: string | undefined) => {
 export const getCategoryUrl = (slug: string | undefined) => {
   return `/category/${slug}`;
 };
-export const searchTextIsTooLong = (searchLength: number) => searchLength > 60;
+export const isSearchTooLong = (searchLength: number) => searchLength > 60;
 
 export const productType = [
   { title: "Tshirt" },

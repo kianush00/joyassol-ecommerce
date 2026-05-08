@@ -1,13 +1,12 @@
 "use client";
 import { AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "../ui/button";
+import { FallbackProps } from "react-error-boundary";
 
-interface Props {
-  error: Error;
-  resetErrorBoundary: () => void;
-}
-
-const ProductsErrorFallback = ({ error, resetErrorBoundary }: Props) => {
+const ProductsErrorFallback = ({
+  error,
+  resetErrorBoundary,
+}: FallbackProps) => {
   return (
     <div className="w-full">
       <div className="flex flex-col items-center justify-center py-16 px-4">
@@ -21,8 +20,11 @@ const ProductsErrorFallback = ({ error, resetErrorBoundary }: Props) => {
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
             Error al cargar productos
           </h3>
+
           <p className="text-gray-600 mb-6">
-            {error.message || "Ha ocurrido un error inesperado"}
+            {error instanceof Error
+              ? error.message
+              : "Ha ocurrido un error inesperado"}
           </p>
 
           {/* Retry button */}

@@ -1,5 +1,5 @@
 "use client";
-import { logoName, productType, searchTextIsTooLong } from "@/app/constants";
+import { logoName, productType, isSearchTooLong } from "@/app/constants";
 import { AlertCircle, Search, Sparkles } from "lucide-react";
 import Link from "next/link";
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const SearchEmptyState = ({ search, setShowSearch }: Props) => {
-  const isTooLong = searchTextIsTooLong(search.length);
+  const isTooLong = isSearchTooLong(search.length);
 
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4">

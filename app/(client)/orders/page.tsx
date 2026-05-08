@@ -31,7 +31,7 @@ const OrdersPage = async () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-[100px] md:w-auto">
+                    <TableHead className="w-25 md:w-auto">
                       Número de pedido
                     </TableHead>
                     <TableHead className="hidden md:table-cell">

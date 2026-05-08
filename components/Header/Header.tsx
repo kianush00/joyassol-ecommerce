@@ -5,7 +5,7 @@ import MobileMenu from "../MobileMenu";
 import SearchBar from "../Search/SearchBar";
 import CartIcon from "../Cart/CartIcon";
 import { auth } from "@clerk/nextjs/server";
-import { ClerkLoaded, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { ClerkLoaded, Show, UserButton } from "@clerk/nextjs";
 import { getAllCategories, getMyOrders } from "@/sanity/helpers/queries";
 import OrdersIcon from "../Order/OrdersIcon";
 import { logoName } from "@/app/constants";
@@ -32,13 +32,13 @@ const Header = async () => {
           <SearchBar />
           <CartIcon />
           <ClerkLoaded>
-            <SignedIn>
+            <Show when="signed-out">
+              <SignInLink />
+            </Show>
+            <Show when="signed-in">
               <OrdersIcon orders={orders} />
               <UserButton />
-            </SignedIn>
-            <SignedOut>
-              <SignInLink />
-            </SignedOut>
+            </Show>
           </ClerkLoaded>
         </div>
       </Container>

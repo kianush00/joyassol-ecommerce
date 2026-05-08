@@ -1,11 +1,13 @@
 "use client";
-import { useState, useEffect, useDeferredValue } from "react";
+import { useState, useEffect, useRef } from "react";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/sanity.types";
-import { searchTextIsTooLong } from "@/app/constants";
+import { isSearchTooLong } from "@/app/constants";
 import { QueryParams } from "next-sanity";
 
 const MAX_RESULTS = 50;
+const DEBOUNCE_MS = 300;
+
 const PRODUCT_SEARCH_QUERY = `*[
         _type == "product" &&
         (
@@ -18,47 +20,55 @@ export function useProductSearch() {
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
-  const deferredSearch = useDeferredValue(search);
+  const [error, setError] = useState<string | null>(null);
+  const controllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    // Initial validation
-    if (!deferredSearch.trim() || searchTextIsTooLong(deferredSearch.length)) {
+    if (!search.trim() || isSearchTooLong(search.length)) {
       setProducts([]);
       setLoading(false);
+      setError(null);
       return;
     }
-
-    const controller = new AbortController();
     setLoading(true);
+    setError(null);
 
-    const fetchProducts = async () => {
+    const debounceTimeout = setTimeout(async () => {
+      controllerRef.current?.abort();
+      controllerRef.current = new AbortController();
+
       try {
-        const params = { search: `*${deferredSearch}*` } as QueryParams;
+        const params = { search: `*${search}*` } as QueryParams;
         const response = await client.fetch<Product[]>(
           PRODUCT_SEARCH_QUERY,
           params,
-          { signal: controller.signal }
+          { signal: controllerRef.current.signal },
         );
         setProducts(response ?? []);
-      } catch (error: unknown) {
-        if ((error as Error)?.name === "AbortError") return;
-        console.error("Product fetching Error:", error);
+        setError(null);
+      } catch (err: unknown) {
+        if ((err as Error)?.name === "AbortError") return;
+        console.error("Product fetching Error:", err);
+        setError("Error al buscar productos. Inténtelo de nuevo.");
         setProducts([]);
       } finally {
-        setLoading(false);
+        if (!controllerRef.current?.signal.aborted) {
+          setLoading(false);
+        }
       }
+    }, DEBOUNCE_MS);
+
+    return () => {
+      clearTimeout(debounceTimeout);
+      controllerRef.current?.abort();
     };
-
-    fetchProducts();
-
-    return () => controller.abort();
-  }, [deferredSearch]);
+  }, [search]);
 
   return {
     search,
     setSearch,
     products,
     loading,
-    isPending: search !== deferredSearch, // indicates that the search is in progress
+    error,
   };
 }

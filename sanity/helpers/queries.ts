@@ -1,16 +1,16 @@
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "../lib/live";
 import {
-  CATEGORIES_QUERYResult,
-  MY_ORDERS_QUERYResult,
-  PRODUCT_BY_SLUG_QUERYResult,
-  PRODUCT_SEARCH_QUERYResult,
-  PRODUCTS_BY_CATEGORY_QUERYResult,
-  PRODUCTS_QUERYResult,
-  SALE_QUERYResult,
+  PRODUCTS_QUERY_RESULT,
+  PRODUCT_BY_SLUG_QUERY_RESULT,
+  PRODUCT_SEARCH_QUERY_RESULT,
+  PRODUCTS_BY_CATEGORY_QUERY_RESULT,
+  SALE_QUERY_RESULT,
+  MY_ORDERS_QUERY_RESULT,
+  CATEGORIES_QUERY_RESULT,
 } from "@/sanity.types";
 
-export const getAllProducts = async (): Promise<PRODUCTS_QUERYResult> => {
+export const getAllProducts = async (): Promise<PRODUCTS_QUERY_RESULT> => {
   const PRODUCTS_QUERY = defineQuery(`*[_type=="product"] | order(name asc)`);
   try {
     const products = await sanityFetch({
@@ -24,10 +24,10 @@ export const getAllProducts = async (): Promise<PRODUCTS_QUERYResult> => {
 };
 
 export const getProductBySlug = async (
-  slug: string
-): Promise<PRODUCT_BY_SLUG_QUERYResult | null> => {
+  slug: string,
+): Promise<PRODUCT_BY_SLUG_QUERY_RESULT | null> => {
   const PRODUCT_BY_SLUG_QUERY = defineQuery(
-    `*[_type == "product" && slug.current == $slug] | order(name asc) [0]`
+    `*[_type == "product" && slug.current == $slug] | order(name asc) [0]`,
   );
   try {
     const product = await sanityFetch({
@@ -42,20 +42,21 @@ export const getProductBySlug = async (
 };
 
 export const getAllCategories = async (
-  quantity?: number
-): Promise<CATEGORIES_QUERYResult> => {
+  quantity?: number,
+): Promise<CATEGORIES_QUERY_RESULT> => {
   // Default to 50
   if (!quantity || quantity < 1) {
     quantity = 50;
   }
 
   const CATEGORIES_QUERY = defineQuery(
-    `*[_type == "category"][0...${quantity}] | order(name asc)`
+    `*[_type == "category"][0...$quantity] | order(name asc)`,
   );
 
   try {
     const categories = await sanityFetch({
       query: CATEGORIES_QUERY,
+      params: { quantity },
     });
     return categories?.data || [];
   } catch (error) {
@@ -65,10 +66,10 @@ export const getAllCategories = async (
 };
 
 export const searchProductsByName = async (
-  searchParam: string
-): Promise<PRODUCT_SEARCH_QUERYResult> => {
+  searchParam: string,
+): Promise<PRODUCT_SEARCH_QUERY_RESULT> => {
   const PRODUCT_SEARCH_QUERY = defineQuery(
-    `*[_type == "product" && name match $searchParam] | order(name asc)`
+    `*[_type == "product" && name match $searchParam] | order(name asc)`,
   );
 
   try {
@@ -86,10 +87,10 @@ export const searchProductsByName = async (
 };
 
 export const getProductsByCategory = async (
-  categorySlug: string
-): Promise<PRODUCTS_BY_CATEGORY_QUERYResult> => {
+  categorySlug: string,
+): Promise<PRODUCTS_BY_CATEGORY_QUERY_RESULT> => {
   const PRODUCTS_BY_CATEGORY_QUERY = defineQuery(
-    `*[_type == 'product' && references(*[_type == "category" && slug.current == $categorySlug]._id)] | order(name asc)`
+    `*[_type == 'product' && references(*[_type == "category" && slug.current == $categorySlug]._id)] | order(name asc)`,
   );
   try {
     const products = await sanityFetch({
@@ -105,7 +106,7 @@ export const getProductsByCategory = async (
   }
 };
 
-export const getSale = async (): Promise<SALE_QUERYResult> => {
+export const getSale = async (): Promise<SALE_QUERY_RESULT> => {
   const SALE_QUERY = defineQuery(`*[_type == 'sale'] | order(name asc)`);
   try {
     const products = await sanityFetch({
@@ -119,8 +120,8 @@ export const getSale = async (): Promise<SALE_QUERYResult> => {
 };
 
 export const getMyOrders = async (
-  userId: string
-): Promise<MY_ORDERS_QUERYResult> => {
+  userId: string,
+): Promise<MY_ORDERS_QUERY_RESULT> => {
   if (!userId) {
     throw new Error("User ID is required");
   }

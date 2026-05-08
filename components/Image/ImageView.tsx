@@ -64,7 +64,7 @@ const ImageView = ({ images }: Props) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.1 }}
-          className="w-full max-h-[550px] min-h-[450px] border rounded-md group overflow-hidden"
+          className="w-full max-h-137.5 min-h-112.5 border rounded-md group overflow-hidden"
         >
           {mainUrl && (
             <Image
@@ -73,7 +73,7 @@ const ImageView = ({ images }: Props) => {
               height={700}
               alt={`Image ${active?._key ?? "product"}`}
               priority
-              className="w-full h-96 max-h-[550px] min-h-[500px] object-contain group-hover:scale-110 hoverEffect rounded-md"
+              className="w-full h-96 max-h-137.5 min-h-125 object-contain group-hover:scale-110 hoverEffect rounded-md"
             />
           )}
         </motion.div>

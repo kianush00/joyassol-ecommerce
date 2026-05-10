@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from "react";
 import { TableBody, TableCell, TableRow } from "../ui/table";
 import PriceFormatter from "../Price/PriceFormatter";
-import { MY_ORDERS_QUERYResult } from "@/sanity.types";
+import { MY_ORDERS_QUERY_RESULT } from "@/sanity.types";
 import OrderDetailsDialog from "./OrderDetailsDialog";
 import {
   Tooltip,
@@ -15,13 +15,13 @@ import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
+const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERY_RESULT }) => {
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
   const [selectedOrder, setSelectedOrder] = useState<
-    MY_ORDERS_QUERYResult[number] | null
+    MY_ORDERS_QUERY_RESULT[number] | null
   >(null);
 
-  const handleOrderClick = (order: MY_ORDERS_QUERYResult[number]) => {
+  const handleOrderClick = (order: MY_ORDERS_QUERY_RESULT[number]) => {
     setSelectedOrder(order);
   };
   const router = useRouter();
@@ -33,13 +33,13 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
 
   const handleDeleteOrder = async (
     orderId: string,
-    event: React.MouseEvent
+    event: React.MouseEvent,
   ) => {
     event.stopPropagation(); // Prevent expanding the order when clicking delete
 
     if (
       !confirm(
-        "¿Seguro que desea eliminar este pedido? Esta acción no se puede deshacer."
+        "¿Seguro que desea eliminar este pedido? Esta acción no se puede deshacer.",
       )
     ) {
       return;
@@ -71,7 +71,7 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
       toast.error(
         error instanceof Error
           ? error.message
-          : "No se pudo eliminar el pedido. Inténtelo de nuevo."
+          : "No se pudo eliminar el pedido. Inténtelo de nuevo.",
       );
     } finally {
       setIsDeleting(null);

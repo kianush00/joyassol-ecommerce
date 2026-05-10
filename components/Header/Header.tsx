@@ -4,19 +4,11 @@ import Container from "../Container";
 import MobileMenu from "../MobileMenu";
 import SearchBar from "../Search/SearchBar";
 import CartIcon from "../Cart/CartIcon";
-import { auth } from "@clerk/nextjs/server";
-import { ClerkLoaded, Show, UserButton } from "@clerk/nextjs";
-import { getAllCategories, getMyOrders } from "@/sanity/helpers/queries";
-import OrdersIcon from "../Order/OrdersIcon";
+import { getAllCategories } from "@/sanity/helpers/queries";
 import { logoName } from "@/app/constants";
-import SignInLink from "./SignInLink";
+import HeaderAuth from "./HeaderAuth";
 
 const Header = async () => {
-  const { userId } = await auth();
-  // Load orders only if the user is signed in
-  const orders = userId ? await getMyOrders(userId) : null;
-
-  // Fetch categories
   const categories = await getAllCategories(12);
   const headerCategories = categories?.slice(0, 3) || [];
 
@@ -31,15 +23,7 @@ const Header = async () => {
         <div className="w-auto md:w-1/3 flex items-center justify-end gap-5">
           <SearchBar />
           <CartIcon />
-          <ClerkLoaded>
-            <Show when="signed-out">
-              <SignInLink />
-            </Show>
-            <Show when="signed-in">
-              <OrdersIcon orders={orders} />
-              <UserButton />
-            </Show>
-          </ClerkLoaded>
+          <HeaderAuth />
         </div>
       </Container>
     </header>

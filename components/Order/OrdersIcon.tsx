@@ -1,8 +1,8 @@
-import { MY_ORDERS_QUERYResult } from "@/sanity.types";
+import { MY_ORDERS_QUERY_RESULT } from "@/sanity.types";
 import { ListOrdered } from "lucide-react";
 import Link from "next/link";
 
-const OrdersIcon = ({ orders }: { orders: MY_ORDERS_QUERYResult | null }) => {
+const OrdersIcon = ({ orders }: { orders: MY_ORDERS_QUERY_RESULT | null }) => {
   const ordersLength = orders?.length || 0;
   const count = ordersLength > 99 ? "99+" : ordersLength;
 

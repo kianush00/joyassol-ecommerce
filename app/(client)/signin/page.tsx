@@ -1,6 +1,4 @@
 "use client";
-
-import { GoogleIcon } from "@/components/icons/GoogleIcon";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,14 +11,16 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useOAuthSignIn } from "@/hooks/useOAuthSignIn";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
-import { Facebook, Mail, Loader2 } from "lucide-react";
+import { Mail, Loader2 } from "lucide-react";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
 
 const SignInPage = () => {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect_url") || "/";
   const { signInWith, isLoading, isSigningIn } = useOAuthSignIn({
-    redirectUrlComplete: redirectUrl,
+    redirectUrl: redirectUrl,
+    redirectCallbackUrl: "/sso-callback",
   });
 
   return (
@@ -46,7 +46,7 @@ const SignInPage = () => {
             {isLoading === "oauth_google" ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (
-              <GoogleIcon className="mr-2 h-4 w-4" />
+              <FaGoogle className="mr-2 h-4 w-4" />
             )}
             Continuar con Google
           </Button>
@@ -62,7 +62,7 @@ const SignInPage = () => {
             {isLoading === "oauth_facebook" ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (
-              <Facebook className="mr-2 h-4 w-4" />
+              <FaFacebook className="mr-2 h-4 w-4" />
             )}
             Continuar con Facebook
           </Button>

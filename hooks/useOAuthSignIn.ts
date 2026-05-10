@@ -2,12 +2,11 @@
 import { useSignIn } from "@clerk/nextjs";
 import { useState, useCallback } from "react";
 import toast from "react-hot-toast";
-
-type OAuthStrategy = "oauth_google" | "oauth_facebook";
+import { OAuthStrategy } from "@clerk/shared/types";
 
 interface UseOAuthSignInOptions {
   redirectUrl?: string;
-  redirectUrlComplete?: string;
+  redirectCallbackUrl?: string;
   onError?: (error: Error) => void;
   onSuccess?: () => void;
 }
@@ -17,8 +16,8 @@ export function useOAuthSignIn(options: UseOAuthSignInOptions = {}) {
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
   const {
-    redirectUrl = "/sso-callback",
-    redirectUrlComplete = "/",
+    redirectUrl = "/",
+    redirectCallbackUrl = "/sso-callback",
     onError,
     onSuccess,
   } = options;
@@ -33,11 +32,15 @@ export function useOAuthSignIn(options: UseOAuthSignInOptions = {}) {
       setIsLoading(strategy);
 
       try {
-        await signIn.authenticateWithRedirect({
+        const { error } = await signIn.sso({
           strategy,
           redirectUrl,
-          redirectUrlComplete,
+          redirectCallbackUrl,
         });
+
+        if (error) {
+          throw new Error(error.message);
+        }
 
         // Success callback
         onSuccess?.();
@@ -47,7 +50,7 @@ export function useOAuthSignIn(options: UseOAuthSignInOptions = {}) {
 
         // Error toast
         toast.error(
-          error.message || "Error al iniciar sesión. Inténtelo de nuevo."
+          error.message || "Error al iniciar sesión. Inténtelo de nuevo.",
         );
 
         // Error callback
@@ -56,7 +59,7 @@ export function useOAuthSignIn(options: UseOAuthSignInOptions = {}) {
         setIsLoading(null);
       }
     },
-    [signIn, redirectUrl, redirectUrlComplete, onError, onSuccess]
+    [signIn, redirectUrl, redirectCallbackUrl, onError, onSuccess],
   );
 
   return {

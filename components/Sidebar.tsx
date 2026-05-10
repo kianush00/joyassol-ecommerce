@@ -4,13 +4,13 @@ import { X } from "lucide-react";
 import SocialMedia from "./SocialMedia";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { getCategoryUrl, logoName } from "../app/constants/index";
-import { CATEGORIES_QUERYResult } from "@/sanity.types";
+import { CATEGORIES_QUERY_RESULT } from "@/sanity.types";
 import MenuItem from "./MenuItem";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  categories: CATEGORIES_QUERYResult;
+  categories: CATEGORIES_QUERY_RESULT;
 }
 
 const Sidebar = ({ isOpen, onClose, categories }: Props) => {

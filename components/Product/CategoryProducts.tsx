@@ -1,12 +1,12 @@
 "use client";
-import { CATEGORIES_QUERYResult } from "@/sanity.types";
+import { CATEGORIES_QUERY_RESULT } from "@/sanity.types";
 import CategoriesSidebar from "./CategoriesSidebar";
 import { ErrorBoundary } from "react-error-boundary";
 import CategoryProductsContent from "./CategoryProductsContent";
 import ProductsErrorFallback from "./ProductsErrorFallback";
 
 interface Props {
-  categories: CATEGORIES_QUERYResult;
+  categories: CATEGORIES_QUERY_RESULT;
   slug: string;
 }
 

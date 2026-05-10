@@ -73,7 +73,7 @@ const SearchResultItem = ({ product, setShowSearch }: Props) => {
         </div>
 
         {/* Add to cart */}
-        <div className="w-32 sm:w-40 md:w-52 shrink-0">
+        <div className="w-32 sm:w-38 md:w-45 shrink-0">
           <AddToCartButton product={product} />
         </div>
       </div>

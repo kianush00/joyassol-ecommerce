@@ -1,10 +1,10 @@
 "use client";
-import { CATEGORIES_QUERYResult } from "@/sanity.types";
+import { CATEGORIES_QUERY_RESULT } from "@/sanity.types";
 import MenuItem from "../MenuItem";
 import { getCategoryUrl } from "@/app/constants";
 
 interface Props {
-  categories: CATEGORIES_QUERYResult;
+  categories: CATEGORIES_QUERY_RESULT;
 }
 
 const HeaderMenu = ({ categories }: Props) => {

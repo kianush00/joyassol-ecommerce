@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "../ui/table";
 import PriceFormatter from "../Price/PriceFormatter";
-import { MY_ORDERS_QUERYResult } from "@/sanity.types";
+import { MY_ORDERS_QUERY_RESULT } from "@/sanity.types";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { Button } from "../ui/button";
@@ -16,7 +16,7 @@ import Link from "next/link";
 import NoImageFallback from "../Image/NoImageFallback";
 
 interface OrderDetailsDialogProps {
-  order: MY_ORDERS_QUERYResult[number] | null;
+  order: MY_ORDERS_QUERY_RESULT[number] | null;
   isOpen: boolean;
   onClose: () => void;
 }

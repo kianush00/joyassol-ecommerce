@@ -2,10 +2,10 @@
 import { AlignLeft } from "lucide-react";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
-import { CATEGORIES_QUERYResult } from "@/sanity.types";
+import { CATEGORIES_QUERY_RESULT } from "@/sanity.types";
 
 interface Props {
-  categories: CATEGORIES_QUERYResult;
+  categories: CATEGORIES_QUERY_RESULT;
 }
 
 const MobileMenu = ({ categories }: Props) => {

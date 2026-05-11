@@ -216,9 +216,9 @@ To tailor the template to your needs:
 
 ```bash
 # Add new UI components from shadcn/ui
-npx shadcn@latest add button
-npx shadcn@latest add card
-npx shadcn@latest add dialog
+pnpm dlx shadcn@latest add button
+pnpm dlx shadcn@latest add card
+pnpm dlx shadcn@latest add dialog
 # Components will be added to /components/ui/
 ```
 

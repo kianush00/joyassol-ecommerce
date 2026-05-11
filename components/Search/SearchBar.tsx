@@ -37,7 +37,7 @@ const SearchBar = () => {
       </DialogTrigger>
 
       {/* Modal Content */}
-      <DialogContent className="min-w-3xl max-w-5xl min-h-[90vh] max-h-[90vh] flex flex-col overflow-hidden">
+      <DialogContent className="w-[calc(100%-2rem)] md:w-[calc(100%-4rem)] max-w-5xl h-[90vh] flex flex-col overflow-hidden">
         <DialogHeader>
           <DialogTitle className="mb-1">Búsqueda de productos</DialogTitle>
 

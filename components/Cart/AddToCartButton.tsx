@@ -85,10 +85,10 @@ const AddToCartButton = ({ product, className }: Props) => {
           onClick={handleAddToCart}
           disabled={isOutOfStock || isAdding}
           className={cn(
-            "w-full bg-transparent text-darkColor shadow-none border border-darkColor/30 font-semibold tracking-wide hover:text-white hoverEffect",
+            "w-full bg-transparent text-darkColor shadow-none border border-darkColor/30 font-semibold tracking-wide hover:text-white hover:bg-darkColor hoverEffect",
             isOutOfStock && "opacity-50 cursor-not-allowed",
             isAdding && "opacity-70",
-            className
+            className,
           )}
           aria-label={`Añadir ${productName} al carrito`}
         >

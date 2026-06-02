@@ -9,7 +9,7 @@ import {
 } from "@/actions/createCheckoutSession";
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import Loading from "../Loading";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import useCartStore from "../../store";

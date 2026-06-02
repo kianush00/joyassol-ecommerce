@@ -13,7 +13,7 @@ import {
 import { format } from "date-fns";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERY_RESULT }) => {
   const [isDeleting, setIsDeleting] = useState<string | null>(null);

@@ -1,6 +1,6 @@
 "use client";
 import useCartStore from "@/store";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import CartProductItem from "./CartProductItem";
 
 const CartProductsList = () => {

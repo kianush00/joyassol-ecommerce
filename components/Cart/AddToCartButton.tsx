@@ -1,6 +1,6 @@
 "use client";
 import { Product } from "@/sanity.types";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { cn, truncateName } from "@/lib/utils";
 import QuantityButtons from "./QuantityButtons";
@@ -41,7 +41,7 @@ const AddToCartButton = ({ product, className }: Props) => {
 
     try {
       addItem(product);
-      toast.success(`${truncateName(productName, 20)} añadido al carrito`);
+      toast.success(`${truncateName(productName, 30)} añadido al carrito`);
     } catch (error) {
       toast.error("Error al añadir al carrito");
       console.error("Error adding to cart:", error);

@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Minus, Plus } from "lucide-react";
 import { cn, truncateName } from "@/lib/utils";
 import useCartStore from "@/store";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useZustandSnapshot } from "@/hooks/useZustandSnapshot";
 
 interface Props {
@@ -25,7 +25,7 @@ const QuantityButtons = ({ product, className }: Props) => {
     if (itemCount > 1) {
       toast.success("Cantidad reducida correctamente");
     } else {
-      toast.success(`${truncateName(productName, 20)} eliminado del carrito`, {
+      toast.success(`${truncateName(productName, 30)} eliminado del carrito`, {
         icon: "🗑️",
       });
     }
@@ -35,7 +35,7 @@ const QuantityButtons = ({ product, className }: Props) => {
     if (isOutOfStock) return; // Prevent adding out of stock products
 
     addItem(product);
-    toast.success(`${truncateName(productName, 20)} agregado`);
+    toast.success(`${truncateName(productName, 30)} agregado`);
   };
 
   if (!product._id) {

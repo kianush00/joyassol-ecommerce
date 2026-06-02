@@ -1,7 +1,7 @@
 "use client";
 import { useSignIn } from "@clerk/nextjs";
 import { useState, useCallback } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { OAuthStrategy } from "@clerk/shared/types";
 
 interface UseOAuthSignInOptions {

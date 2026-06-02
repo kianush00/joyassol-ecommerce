@@ -25,6 +25,7 @@ export function useProductSearch() {
 
   useEffect(() => {
     if (!search.trim() || isSearchTooLong(search.length)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProducts([]);
       setLoading(false);
       setError(null);

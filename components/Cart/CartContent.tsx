@@ -3,7 +3,7 @@ import { ShoppingBag } from "lucide-react";
 import CartProductsList from "./CartProductsList";
 import { Button } from "../ui/button";
 import useCartStore from "@/store";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import CartOrderSummary from "./CartOrderSummary";
 
 export default function CartContent() {
@@ -11,7 +11,7 @@ export default function CartContent() {
 
   const handleResetCart = () => {
     const confirmed = globalThis.confirm(
-      "¿Estás segur@ de que quieres restablecer el carrito?"
+      "¿Estás segur@ de que quieres restablecer el carrito?",
     );
     if (confirmed) {
       resetCart();
